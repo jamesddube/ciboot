@@ -3,9 +3,9 @@ class Model_products extends CI_Model
 {
 	 function get_products()
 	{
-		$query = $this->db->query("SELECT * FROM products");
+		$query = $this->db->query("SELECT * FROM products order by prodcategory desc");
 			
-		return $query->result();
+		return $query->result_array();
 			
 	}
 
@@ -41,7 +41,7 @@ class Model_products extends CI_Model
 		}
 		else
 		{
-			return 'No Orders Found';
+			return 'None';
 		}
 
 	}
@@ -67,7 +67,34 @@ class Model_products extends CI_Model
 		}
 
 	}
-	
+
+	/**
+	 * @return string
+	 */
+	public function get_new_order_number()
+	{
+		$query = $this->db->query("SELECT count(order_id) as 'Quantity' FROM orders");
+		if($query->num_rows()>0)
+		{
+			$results = $query->row();
+
+			//generate new order number, we have the number of orders so we just allocate the next one
+			$results->Quantity += 1;
+			 //fill in the zero placeholders
+			//eg. OD0006 instead of OD6
+			$new = 'OD'.sprintf("%04d", $results->Quantity);
+
+
+
+
+			return $new;
+
+		}
+		else
+		{
+			return 'none';
+		}
+	}
 
 }
 

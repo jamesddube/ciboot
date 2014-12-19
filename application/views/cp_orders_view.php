@@ -18,7 +18,10 @@ require ('template/sidebar.php');
 	<!-- begin page-header -->
 	<h1 class="page-header hidden-print">Order Details <small>header small text goes here...</small></h1>
 	<!-- end page-header -->
-
+<?php
+if ('None' !== $orders)
+{
+?>
 	<!-- begin invoice -->
 	<div class="invoice">
 		<div class="invoice-company">
@@ -26,7 +29,7 @@ require ('template/sidebar.php');
                     <a href="javascript:" class="btn btn-sm btn-success m-b-10"><i class="fa fa-download m-r-5"></i> Export as PDF</a>
                     <a href="javascript:" onclick="window.print()" class="btn btn-sm btn-success m-b-10"><i class="fa fa-print m-r-5"></i> Print</a>
                     </span>
-			OK ZIMBABWE (PLC) Branch: Rusape
+			ORDER DETAILS
 		</div>
 		<div class="invoice-header">
 			<div class="invoice-from">
@@ -42,8 +45,8 @@ require ('template/sidebar.php');
 			<div class="invoice-to">
 				<small>to</small>
 				<address class="m-t-5 m-b-5">
-					<strong>Company Name</strong><br />
-					Street Address<br />
+					<strong><?php echo $orders[0]['customer_name'] ?></strong><br />
+					<?php echo $orders[0]['customer_address'] ?><br />
 					City, Zip Code<br />
 					Phone: (123) 456-7890<br />
 					Fax: (123) 456-7890
@@ -53,7 +56,7 @@ require ('template/sidebar.php');
 				<small>Invoice / July period</small>
 				<div class="date m-t-5">August 3,2012</div>
 				<div class="invoice-detail">
-					<?php echo $orders[0]['order_id'] ?><br />
+					<?php echo $key ?><br />
 					Services Product
 				</div>
 			</div>
@@ -168,6 +171,12 @@ require ('template/sidebar.php');
 		</div>
 	</div>
 	<!-- end invoice -->
+	<?php
+	}
+else{
+	echo 'No invoice was found';
+}
+	?>
 </div>
 <!-- end #content -->
 

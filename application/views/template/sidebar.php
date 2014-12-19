@@ -82,8 +82,19 @@ if($title == 'Business Intelligence')
         <li><a href="chart-morris.html">Morris Chart</a></li>
     </ul>
 </li>
-<li class="<?php echo $nav[3] ?>" ><a href="<?php echo base_url('main/orders') ?>"><i class="fa fa-pencil-square-o"></i> <span>Orders</span></a></li>
 
+    <li class="has-sub">
+        <a href="javascript:;">
+            <b class="caret pull-right"></b>
+            <i class="fa fa-pencil-square-o"></i>
+            <span>Orders</span>
+        </a>
+        <ul class="sub-menu">
+            <li><a href="<?php echo base_url('main/orders_add') ?>"><i class="fa fa-pencil-square-o"></i> <span>Add Order</span></a></li>
+            <li><a href="<?php echo base_url('main/orders') ?>"><i class="fa fa-pencil-square-o"></i> <span>View Orders </span></a></li>
+
+        </ul>
+    </li>
 <li class="has-sub">
     <a href="javascript:;">
         <b class="caret pull-right"></b>

@@ -93,7 +93,7 @@
     $(document).ready(function() {
         App.init();
         DashboardV2.init();
-        
+
     });
 </script>
 <script>

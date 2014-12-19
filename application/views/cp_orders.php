@@ -8,7 +8,7 @@ require ('template/sidebar.php');
 ?>
 
 	<!-- ================== BEGIN PAGE-Modals LEVEL STYLE ================== -->
-    <link href="<?php echo base_url('asssets/plugins/gritter/css/jquery.gritter.css')?>" rel="stylesheet" />	
+    <link href="<?php echo base_url('assets/plugins/gritter/css/jquery.gritter.css')?>" rel="stylesheet" />
 	<!-- ================== END PAGE LEsVEL STYLE ================== -->
 
 <?php
@@ -76,14 +76,16 @@ else{
                                             ?>
                                         </td>
                                         <td>
-                                            <?php
+                                            <a href="<?php echo base_url('main/orders_view/'.$orders[$i]['order_id'])?>"
+                                                ><?php
                                             //print_r($orders);
 
                                             echo $orders[$i]['order_id']
-                                            ?>
+                                            ?></a>
                                         </td>
                                         <td>
                                             <?php
+
                                             //print_r($orders);
 
                                             echo $orders[$i]['customer_id']

@@ -117,22 +117,69 @@ class Main extends CI_Controller {
 
 
 
+//==================================================Start of Function=============================================================
+
+	public function orders_add()
+	{
+		if($this->session->userdata('is_logged_in'))
+		{
+
+			//get salesrep info
+			$this->load->model('model_users');
+			$reps = $this->model_users->get_reps('all');
+
+			//get products info
+			$this->load->model('model_products');
+			$products = $this->model_products->get_products('all');
+
+			//get customers info
+			$this->load->model('model_users');
+			$cust = $this->model_users->get_customers('all');
+
+			//get new order number
+			$order_num = $this->model_products->get_new_order_number();
+
+
+			//pass on user info to admin page
+				$data = array(
+				'username' => $this->session->userdata('username'),
+					'reps' => $reps,
+					'cust' => $cust,
+					'order_num' => $order_num,
+					'products' => $products
+				);
+			$this->load->view('cp_orders_add', $data);
+		}
+		else
+			{
+				redirect('main/restricted');
+			}
+	}
+//==================================================End of Function===============================================================
+
+
+
 
 //==================================================Start of Function=============================================================
 
-	public function orders_view()
-	{
+	/**
+	 * @param $key
+	 */
+	public function orders_view($key)
+	{   //check if user is logged in
 		if($this->session->userdata('is_logged_in'))
 		{
 			//get order info
 			$this->load->model('model_products');
-			$orders = $this->model_products->get_order_details('OD001');
+			$orders = $this->model_products->get_order_details($key);
+
 
 
 			//pass on user info to admin page
 				$data = [
 				'username' => $this->session->userdata('username'),
-					'orders' => $orders
+					'orders' => $orders,
+					'key' => $key
 
 				];
 			$this->load->view('cp_orders_view', $data);

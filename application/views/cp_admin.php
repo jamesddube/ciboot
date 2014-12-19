@@ -294,14 +294,18 @@ echo $ra = rand(40,100);
 
 <!--custom script to insert values onto Order Analysis Chart-->
 <script>
-
-alert(<?php echo $ra ?>)
 var p1000 = []
 p1000[1] = <?php  $ra ?>
 Ltr_Jan = p1000[1];
 var pj = 898
 </script>
+<script>
+    $(document).ready(function() {
+        App.init();
+        DashboardV2.init();
 
+    });
+</script>
 <?php 
 require ('template/footer.php');
 ?>
