@@ -53,7 +53,7 @@
 
 
 								<!-- begin row -->
-							<form action="g" method="POST" data-parsley-validate="true" name="form-wizard">
+							<form action="g" method="POST" data-parsley-validate="true" name="form_order">
 								<div class="row" id="rw">
 									<!-- begin col-4 -->
 									<div class="col-md-4" id="rw1">
@@ -100,7 +100,7 @@
 							<div class="col-md-4" id="rw3">
 								<div class="form-group">
 									<label></label><br>
-									<div  name="middle" class=" btn btn-block btn-success" onclick="anim()" >Save</div>
+									<div  name="middle" class=" btn btn-block btn-success" onclick="get()" >Save</div>
 								</div>
 							</div>
 							<!-- end col-4 -->
@@ -308,7 +308,7 @@
 	<script type="text/javascript">
 
 		function get() {
-			$.post('data',{name:form.name.value},
+			$.post(ll,{name:form_order.name.value},
 				function(output){
 					$('#results').html(output);
 				});
