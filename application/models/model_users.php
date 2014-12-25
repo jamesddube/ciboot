@@ -1,11 +1,16 @@
 <?php
 class Model_users extends CI_Model
 {
+	//===================================Users and Registration==========================================
+	/**
+	 * @return bool
+	 */
 	public function can_log_in()
 	{
-		//first of all we have to get the exact salt for the attempted user
+
+		//first of all we have to get the attempted user
 		$this->db->where('email' , $this->input->post('Email'));
-		//$this->db->where('password' , md5($this->input->post('Password')));
+
 		
 		$query = $this->db->get('users');
 		
@@ -14,8 +19,6 @@ class Model_users extends CI_Model
 			//we have found the user lets now compare the password with the encrypted password
 			if ($this->verify ($this->input->post('Password'), $row->password) === "yes")
 			{
-
-
 
 				//codeigniter sessions don't offer the security i need
 
@@ -52,7 +55,6 @@ class Model_users extends CI_Model
 			'fname' => $this->input->post('rFname'),
 			'surname' => $this->input->post('rLname'),
 			'password' => $hashed_pass[0],
-			'salt' => $hashed_pass[1],
 			'role' => $this->input->post('rRole')
 		);
 		

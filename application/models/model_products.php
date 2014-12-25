@@ -20,7 +20,7 @@ class Model_products extends CI_Model
 		if($query->num_rows()>0);
 		{
 			$row = $query->row();
-			return $row->Quantity;
+			return $row->Quantity > 0 ? $row->Quantity : 0;
 		}
 			
 	}

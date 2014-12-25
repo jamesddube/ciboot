@@ -33,7 +33,7 @@
 			<!-- begin col-12 -->
 			<div class="col-md-12">
 				<!-- begin panel -->
-				<div class="panel panel-inverse">
+				<div class="panel panel-inverse bg-black">
 					<div class="panel-heading">
 						<div class="panel-heading-btn">
 							<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
@@ -44,177 +44,97 @@
 						<h4 class="panel-title">Form Wizards</h4>
 					</div>
 					<div class="panel-body">
-						<form action="http://seantheme.com/" method="POST" data-parsley-validate="true" name="form-wizard">
-							<div id="wizard">
-								<ol>
-									<li>
-										Identification
-										<small>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</small>
-									</li>
-									<li>
-										Contact Information
-										<small>Aliquam bibendum felis id purus ullamcorper, quis luctus leo sollicitudin.</small>
-									</li>
-									<li>
-										Login
-										<small>Phasellus lacinia placerat neque pretium condimentum.</small>
-									</li>
-									<li>
-										Completed
-										<small>Sed nunc neque, dapibus non leo sed, rhoncus dignissim elit.</small>
-									</li>
-								</ol>
-								<!-- begin wizard step-1 -->
-								<div class="wizard-step-1">
-									<fieldset>
-										<legend class="pull-left width-full">Order  #<?php echo $order_num ?></legend>
-										<!-- begin row -->
-										<div class="row">
-											<!-- begin col-4 -->
-											<div class="col-md-4">
-												<div class="form-group block1">
-													<label>Customer</label>
-													<select class="form-control" data-parsley-group="wizard-step-1">
-														<?php
-														//count number of items in array
-														$count = count($cust);
-														for($i = 0;$i<$count;$i++)
-														{
+						<div class="well bg-white">
 
-														?>
-														<option value="<?php echo $cust[$i]['customer_id']?>"><?php echo $cust[$i]['customer_name'] ?></option><?php
-														}
-														?>
-													</select>
-												</div>
-											</div>
-											<!-- end col-4 -->
 
-											<!-- begin col-4 -->
-											<div class="col-md-4">
-												<div class="form-group">
-													<label>Sales Rep</label>
-													<select class="form-control" data-parsley-group="wizard-step-1">
-														<?php
-														//count number of items in array
-														$count = count($reps);
-														for($i = 0;$i<$count;$i++)
-														{
+								<legend class="pull-left width-full ">#<?php echo $order_num ?></legend>
 
-															?>
-															<option value="<?php echo $reps[$i]['id']?>"><?php echo $reps[$i]['fname'] ?></option><?php
-														}
-														?>
-													</select>
-												</div>
-											</div>
-											<!-- end col-4 -->
-											<!-- begin col-4 -->
-											<div class="col-md-4">
-												<div class="form-group">
-													<label>Reference</label>
-													<input type="number" name="middle" placeholder="A" class="form-control" data-parsley-group="wizard-step-1" required />
-												</div>
-											</div>
-											<!-- end col-4 -->
+
+
+
+								<!-- begin row -->
+							<form action="g" method="POST" data-parsley-validate="true" name="form-wizard">
+								<div class="row" id="rw">
+									<!-- begin col-4 -->
+									<div class="col-md-4" id="rw1">
+										<div class="form-group">
+											<label>Customer</label>
+											<select class="form-control">
+												<?php
+												$count = count($cust);
+												for($i=0;$i<$count;$i++)
+												{
+												?>
+												<option value="<?php echo $cust[$i]['customer_id'] ?>"><?php echo $cust[$i]['customer_name'] ?></option>
+												<?php
+												}
+												?>
+											</select>
 										</div>
-										<!-- end row -->
-
-									</fieldset>
-								</div>
-								<!-- end wizard step-1 -->
-								<!-- begin wizard step-2 -->
-								<div class="wizard-step-2">
-									<fieldset>
-										<legend class="pull-left width-full">Product Information</legend>
-										<!-- begin row -->
-										<div class="row">
-											<!-- begin col-6 -->
-											<div class="col-md-6">
-												<div class="form-group">
-													<label>Products</label>
-													<select class="form-control" data-parsley-group="wizard-step-1">
-														<?php
-														//count number of items in array
-														$count = count($products);
-														for($i = 0;$i<$count;$i++)
-														{
-
-															?>
-															<option value="<?php echo $products[$i]['product_id']?>"><?php echo $cust[$i]['customer_name'] ?></option><?php
-														}
-														?>
-													</select>
-
-												</div>
-											</div>
-											<!-- end col-6 -->
-											<!-- begin col-6 -->
-											<div class="col-md-6">
-												<div class="form-group">
-													<label>Email Address</label>
-													<input type="email" name="email" placeholder="someone@example.com" class="form-control" data-parsley-group="wizard-step-2" data-parsley-type="email" required />
-												</div>
-											</div>
-											<!-- end col-6 -->
-										</div>
-										<!-- end row -->
-
-									</fieldset>
-								</div>
-								<!-- end wizard step-2 -->
-								<!-- begin wizard step-3 -->
-								<div class="wizard-step-3">
-									<fieldset>
-										<legend class="pull-left width-full">Login</legend>
-										<!-- begin row -->
-										<div class="row">
-											<!-- begin col-4 -->
-											<div class="col-md-4">
-												<div class="form-group">
-													<label>Username</label>
-													<div class="controls">
-														<input type="text" name="username" placeholder="johnsmithy" class="form-control" data-parsley-group="wizard-step-3" required />
-													</div>
-												</div>
-											</div>
-											<!-- end col-4 -->
-											<!-- begin col-4 -->
-											<div class="col-md-4">
-												<div class="form-group">
-													<label>Pasword</label>
-													<div class="controls">
-														<input type="password" name="password" placeholder="Your password" class="form-control" data-parsley-group="wizard-step-3" required />
-													</div>
-												</div>
-											</div>
-											<!-- end col-4 -->
-											<!-- begin col-4 -->
-											<div class="col-md-4">
-												<div class="form-group">
-													<label>Confirm Pasword</label>
-													<div class="controls">
-														<input type="password" name="password2" placeholder="Confirmed password" class="form-control" />
-													</div>
-												</div>
-											</div>
-											<!-- end col-6 -->
-										</div>
-										<!-- end row -->
-									</fieldset>
-								</div>
-								<!-- end wizard step-3 -->
-								<!-- begin wizard step-4 -->
-								<div>
-									<div class="jumbotron m-b-0">
-										<h1>Login Successfully</h1>
-										<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris consequat commodo porttitor. Vivamus eleifend, arcu in tincidunt semper, lorem odio molestie lacus, sed malesuada est lacus ac ligula. Aliquam bibendum felis id purus ullamcorper, quis luctus leo sollicitudin. </p>
-										<p><a class="btn btn-success btn-lg" role="button">Proceed to User Profile</a></p>
 									</div>
+									<!-- end col-4 -->
+									<!-- begin col-4 -->
+									<div class="col-md-4" id="rw2">
+										<div class="form-group">
+											<label>Sales Rep</label>
+											<select class="form-control">
+												<?php
+												$count = count($reps);
+												for($i=0;$i<$count;$i++)
+												{
+													?>
+													<option value="<?php echo $reps[$i]['id'] ?>"><?php echo $reps[$i]['fname']." ".$reps[$i]['lname'] ?></option>
+												<?php
+												}
+												?>
+											</select>
+										</div>
+									</div>
+									<!-- end col-4 -->
+							</form>
+
 								</div>
-								<!-- end wizard step-4 -->
+								<!-- end row -->
+						<div class="row" id="rw">
+							<!-- begin col-4 -->
+							<div class="col-md-4" id="rw3">
+								<div class="form-group">
+									<label></label><br>
+									<div  name="middle" class=" btn btn-block btn-success" onclick="anim()" >Save</div>
+								</div>
 							</div>
-						</form>
+							<!-- end col-4 -->
+						</div>
+
+						</div>
+						<div class="well bg-white">
+							<a  href="#modal-dialog" data-toggle="modal"><div  name="middle" class=" btn btn-block btn-success" >Add Product</div></a><br>
+							<table class="table table-bordered">
+								<thead>
+								<tr>
+									<th>Product Code</th>
+									<th>Product Description</th>
+									<th>Quantity</th>
+								<tr>
+
+								</thead>
+								<tbody>
+								<tr>
+									<td>1030</td>
+									<td>Coke 300ml</td>
+									<td>34</td>
+								</tr>
+								<tr>
+									<td>1030</td>
+									<td>Coke 300ml</td>
+									<td>34</td>
+								</tr>
+
+								</tbody>
+
+							</table>
+						</div>
+
 					</div>
 				</div>
 				<!-- end panel -->
@@ -224,6 +144,61 @@
 		<!-- end row -->
 	</div>
 	<!-- end #content -->
+
+	<!-- #modal-dialog -->
+	<div class="modal fade" id="modal-dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<h4 class="modal-title">Add Products</h4>
+				</div>
+				<div class="modal-body">
+					<form action="g" method="POST" data-parsley-validate="true" name="form-wizard">
+						<div class="row">
+							<!-- begin col-4 -->
+							<div class="col-md-4" id="rw1">
+								<div class="form-group">
+									<label>Product</label>
+									<select class="form-control">
+										<?php
+										$count = count($products);
+										for($i=0;$i<$count;$i++)
+										{
+											?>
+											<option value="<?php echo $products[$i]['product_id'] ?>"><?php echo $products[$i]['prodname']. "   (".$products[$i]['prodcategory']."ml)" ?></option>
+										<?php
+										}
+										?>
+									</select>
+								</div>
+							</div>
+							<!-- end col-4 -->
+							<!-- begin col-4 -->
+							<div class="col-md-4">
+								<div class="form-group">
+									<label>Quantity</label>
+									<input type="text" name="middle" placeholder="Amount" class="form-control" />
+								</div>
+							</div>
+							<!-- end col-4 -->
+							<!-- begin col-4 -->
+							<div class="col-md-4">
+								<div class="form-group">
+									<label>Total</label>
+									<h4>4566</h4>
+								</div>
+							</div>
+							<!-- end col-4 -->
+					</form>
+				</div>
+				<div class="modal-footer">
+					<a href="javascript:;" class="btn btn-sm btn-white" data-dismiss="modal">Close</a>
+					<a href="javascript:;" class="btn btn-sm btn-success">Action</a>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<!-- begin theme-panel -->
 	<div class="theme-panel">
@@ -301,13 +276,13 @@
 <!-- ================== BEGIN PAGE LEVEL JS ================== -->
 <script src=<?php echo base_url("assets/plugins/parsley/dist/parsley.js") ?>></script>
 <script src=<?php echo base_url("assets/plugins/bootstrap-wizard/js/bwizard.js") ?>></script>
-<script src=<?php echo base_url("assets/js/form-wizards-validation.demo.min.js") ?>></script>
+<script src=<?php echo base_url("assets/js/form-wizards.demo.min.js") ?>></script>
 <script src=<?php echo base_url("assets/js/apps.min.js") ?>></script>
 <!-- ================== END PAGE LEVEL JS ================== -->
 <script>
 	$(document).ready(function() {
 		App.init();
-		FormWizardValidation.init();
+		FormWizard.init();
 	});
 </script>
 <script>
@@ -319,5 +294,25 @@
 	ga('create', 'UA-53034621-1', 'auto');
 	ga('send', 'pageview');
 </script>
+	<script>
+		function anim()
+		{
+			$('#rw1').slideToggle(1000);
+			$('#rw2').slideToggle(1000);
+
+
+
+
+		};
+	</script>
+	<script type="text/javascript">
+
+		function get() {
+			$.post('data',{name:form.name.value},
+				function(output){
+					$('#results').html(output);
+				});
+		}
+	</script>
 </body>
 </html>

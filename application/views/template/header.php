@@ -46,7 +46,7 @@
 <!-- begin #page-container -->
 <div id="page-container" class="fade page-sidebar-fixed page-header-fixed">
 <!-- begin #header -->
-<div id="header" class="header navbar navbar-default navbar-fixed-top">
+<div id="header" class="header navbar navbar-default navbar-fixed-top navbar-inverse">
     <!-- begin container-fluid -->
     <div class="container-fluid">
         <!-- begin mobile sidebar expand / collapse button -->

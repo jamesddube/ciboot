@@ -1,7 +1,12 @@
 
 
 <?php
-session_start();
+//check if the session has already started, (on first login the session would have started
+//when initialising user session
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 if($_SESSION['logged'] !== 'yes')
 {
     redirect(base_url("main/restricted" ));
@@ -10,7 +15,7 @@ if($_SESSION['logged'] !== 'yes')
 ?>
 
 <!-- begin #sidebar -->
-<div id="sidebar" class="sidebar">
+<div id="sidebar" class="sidebar sidebar-grid">
 <!-- begin sidebar scrollbar -->
 <div data-scrollbar="true" data-height="100%">
 <!-- begin sidebar user -->
