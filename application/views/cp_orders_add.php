@@ -262,6 +262,7 @@
 
 <!-- ================== BEGIN BASE JS ================== -->
 <script src=<?php echo base_url("assets/plugins/jquery-1.8.2/jquery-1.8.2.min.js") ?>></script>
+
 <script src=<?php echo base_url("assets/plugins/jquery-ui-1.10.4/ui/minified/jquery-ui.min.js") ?>></script>
 <script src=<?php echo base_url("assets/plugins/bootstrap-3.2.0/js/bootstrap.min.js") ?>></script>
 <!--[if lt IE 9]>
@@ -308,9 +309,9 @@
 	<script type="text/javascript">
 
 		function get() {
-			$.post(ll,{name:form_order.name.value},
+			$.post('',{name:form_order.name.value},
 				function(output){
-					$('#results').html(output);
+					$('#results').html(output).$('#rw1').slideToggle(1000)
 				});
 		}
 	</script>

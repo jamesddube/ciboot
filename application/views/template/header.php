@@ -15,7 +15,6 @@
     <link href="<?php echo base_url("assets/plugins/jquery-ui-1.10.4/themes/base/minified/jquery-ui.min.css")?> "rel="stylesheet" />
     <link href="<?php echo base_url("assets/plugins/bootstrap-3.2.0/css/bootstrap.min.css" )?>"rel="stylesheet" />
     <link href="<?php echo base_url("assets/plugins/font-awesome-4.2.0/css/font-awesome.min.css" )?>"rel="stylesheet" />
-    <link href="<?php echo base_url("http://seantheme.com/color-admin-v1.4/admin/assets/css/animate.min.css")?>" rel="stylesheet" />
     <link href="<?php echo base_url("assets/css/style.min.css" )?>"rel="stylesheet" />
     <link href="<?php echo base_url("assets/css/style-responsive.min.css")?> "rel="stylesheet" />
 
