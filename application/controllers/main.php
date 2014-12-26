@@ -124,7 +124,7 @@ class Main extends CI_Controller {
 		if($this->session->userdata('is_logged_in'))
 		{
 
-			//get salesrep info
+			//get salesrep info kkk
 			$this->load->model('model_users');
 			$reps = $this->model_users->get_reps('all');
 
