@@ -194,19 +194,59 @@ class Main extends CI_Controller {
 				redirect('main/restricted');
 			}
 	}
-//==================================================End of Function===============================================================
-
-
 
 
 //====================================================================================================================================
 
-	public function jq_add()
+	/**
+	 *
+	 */
+	public function o_add()
 	{
-		echo rand (100,400);
+		//echo rand(89,900)." ".$this->input->post('qty')." ".$this->input->post('oi')." ".$this->input->post('prod');
+		$oi = $this->input->post('oi');
+		$prod = $this->input->post('prod');
+		$qty = $this->input->post('qty');
+		$data = array(
+			'order_id' => $oi,
+			'product_id' => $prod,
+			'quantity' => $qty
+		);
+
+		if($this->model_orders->order_add_details($data))
+		{
+			echo "<div class='alert alert-success text-center'>Saved </div>";
+		}
+
+	}
+
+//====================================================================================================================================
+
+	public function jq_order_qty()
+	{
+		//recieve order id
+		$oi = $this->input->post('oi');
+
+		//get order details from db
+		$details= $this->model_orders->get_order_details($oi);
+
+		//count all entries for the order
+		$count = count($details);
+		$qty = 0;
+
+		for ($i=0;$i<$count;$i++)
+		{
+			$qty = $qty + $details[$i]['quantity'];
+		}
+
+		//display back to the page
+		echo "<div class='modal-title' ><b>$qty</b></div>";
 	}
 //====================================================================================================================================
 
+	/**
+	 *
+	 */
 	public function order_save()
 	{
 
@@ -235,9 +275,10 @@ class Main extends CI_Controller {
 			'products' => $products
 		);
 
-		//if( $this->model_orders->order_save())
-		if(1==1)
+		/** @var TYPE_NAME $this */
+		if( $this->model_orders->order_save())
 		{
+			$data['orders'] = $this->model_orders->get_order_details($oi);
 			$data['msg'] =  "<div class='alert alert-success text-center'>Order Saved</div>";
 			$data['saved_state'] = 1;
 			$data['username'] = $this->session->userdata('username');
@@ -261,7 +302,7 @@ class Main extends CI_Controller {
 
 
 
-//==================================================Start of Function=============================================================
+//==================================================     END OF ORDERS    =============================================================
 
 	public function map()
 	{

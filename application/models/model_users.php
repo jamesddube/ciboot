@@ -58,9 +58,9 @@ class Model_users extends CI_Model
 			'role' => $this->input->post('rRole')
 		);
 		
-		$query = $this->db->insert('users' , $data);
+		//$query = $this->db->insert('usersj' , $data);
 		
-		if ($query)
+		if ($query= $this->db->insert('users' , $data))
 		{
 			return true;
 		}

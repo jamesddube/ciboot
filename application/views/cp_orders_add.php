@@ -1,6 +1,7 @@
 
 	<?php
 	$title = "Orders";
+	$test = 0;
 	require('template/header.php')
 
 
@@ -161,16 +162,46 @@
 
 								</thead>
 								<tbody>
+								<?php
+								//count number of items in array
+								$count = count($orders);
+								$tot = 0;
+								for($i = 0;$i<$count;$i++) {
+
+								//$tot = $tot + $orders[$i]['quantity'];
+								?>
+
 								<tr>
-									<td>1030</td>
-									<td>Coke 300ml</td>
-									<td>34</td>
+
+									<td>
+										<?php
+										//print_r($orders);
+
+										echo $orders[$i]['product_id']
+
+										?>
+									</td>
+									<td>
+										<?php
+										//print_r($orders);
+
+										echo $orders[$i]['prodname']
+
+										?>
+									</td>
+									<td>
+										<?php
+										//print_r($orders);
+
+										//echo $orders[$i]['quantity']
+										echo  $test;
+
+										?>
+									</td>
 								</tr>
-								<tr>
-									<td>1030</td>
-									<td>Coke 300ml</td>
-									<td>34</td>
-								</tr>
+								<?php
+								}
+								?>
 
 								</tbody>
 
@@ -196,16 +227,24 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-					<h4 class="modal-title">Add Products</h4>
+					<h4 class="modal-title" >Add Product </h4>
 				</div>
 				<div class="modal-body">
-					<form action="g" method="POST" data-parsley-validate="true" name="form-wizard">
+					<form action="" method="POST" data-parsley-validate="true" name="details">
 						<div class="row">
+							<!-- begin col-4 -->
+							<div class="col-md-12" id="rw1">
+								<div class="form-group">
+
+									<div id="details_results"></div>
+								</div>
+							</div>
+							<!-- end col-4 -->
 							<!-- begin col-4 -->
 							<div class="col-md-4" id="rw1">
 								<div class="form-group">
 									<label>Product</label>
-									<select class="form-control">
+									<select class="form-control" name="prod">
 										<?php
 										$count = count($products);
 										for($i=0;$i<$count;$i++)
@@ -223,7 +262,8 @@
 							<div class="col-md-4">
 								<div class="form-group">
 									<label>Quantity</label>
-									<input type="text" name="middle" placeholder="Amount" class="form-control" />
+									<input type="text" name="qty" placeholder="Amount"  class="form-control" />
+									<input type="hidden" name="onum" value="<?php echo $order_num ?>">
 								</div>
 							</div>
 							<!-- end col-4 -->
@@ -231,15 +271,17 @@
 							<div class="col-md-4">
 								<div class="form-group">
 									<label>Total</label>
-									<div id="results2"></div>
+									<div id="details_qty"></div>
 								</div>
 							</div>
 							<!-- end col-4 -->
+
+
 					</form>
 				</div>
 				<div class="modal-footer">
 					<a href="javascript:;" class="btn btn-sm btn-white" data-dismiss="modal">Close</a>
-					<a href="javascript:;" class="btn btn-sm btn-success" onclick="get2()">Action</a>
+					<div class="btn btn-sm btn-success" onclick="add_details()" onkeyup="get_qty()" >Action</div>
 				</div>
 			</div>
 		</div>
@@ -360,9 +402,43 @@
 	<script type="text/javascript">
 
 		function get2() {
-			$.post('jq',{name:fo.cu.value},
+			$.post('jq',{name:details.qty.value},
 				function(output){
-					$('#results23').html(output);
+					$('#details_results').html(output);
+				});
+		}
+	</script>
+	<script type="text/javascript">
+
+		function add_details1() {
+			$.post('o_add',{qty:details.qty.value,oi:details.onum.value,prod:details.prod.value},
+				function(output){
+					$('#details_results').html(output);
+				});
+			$.post('jq_order_qty',{oi:details.onum.value},
+				function(output){
+					$('#qty').html(output);
+				});
+
+
+		}
+	</script><script type="text/javascript">
+
+		function add_details() {
+
+			$.post('o_add',{qty:details.qty.value,oi:details.onum.value,prod:details.prod.value},
+				function(output){
+					$('#details_results').html(output,get_qty());
+				});
+			$('#details_results').fadeOut().fadeIn();
+
+		}
+
+		function get_qty()
+		{
+			$.post('jq_order_qty',{oi:details.onum.value},
+				function(output){
+					$('#details_qty').html(output);
 				});
 		}
 	</script>

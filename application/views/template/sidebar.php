@@ -3,7 +3,12 @@
 <?php
 //check if the session has already started, (on first login the session would have started
 //when initialising user session
-session_start();
+if(!isset($_SESSION['logged']))
+
+{
+    session_start();
+}
+
 
 if($_SESSION['logged'] !== 'yes')
 {

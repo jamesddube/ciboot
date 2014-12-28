@@ -86,17 +86,10 @@ class Model_orders extends CI_Model
 	}
 	//===================================================================================================================================
 
-	public function order_add_details($oi)
+	public function order_add_details($data)
 	{
+
 		//get the details from jquery, we can store the data in the db
-
-		$data = array(
-			'order_id' => $oi,
-			'product_id' => 3030,
-			'quantity' => 15
-		);
-
-
 
 		if ($query = $this->db->insert ('order_details',$data))
 		{
