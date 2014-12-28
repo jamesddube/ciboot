@@ -111,7 +111,7 @@ $autoload['language'] = array();
 |
 */
 
-$autoload['model'] = array();
+$autoload['model'] = array('model_users','model_products','model_orders');
 
 
 /* End of file autoload.php */

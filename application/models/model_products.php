@@ -25,26 +25,7 @@ class Model_products extends CI_Model
 			
 	}
 
-	/**
-	 * @param $sql
-	 * @return mixed
-	 */
-	function get_order_details($sql)
-	{
 
-		$query = $this->db->query ("SELECT * FROM vw_orders WHERE order_id = '$sql'");
-		if($query->num_rows()>0)
-		{
-			$result = $query->result_array ();
-			return $result;
-
-		}
-		else
-		{
-			return 'None';
-		}
-
-	}
 
 	/**
 	 * this
@@ -63,36 +44,33 @@ class Model_products extends CI_Model
 		}
 		else
 		{
-			return 'No Orders Found';
+			return 'nothing';
 		}
 
 	}
 
-	/**
-	 * @return string
-	 */
-	public function get_new_order_number()
+
+
+	public function order_save()
 	{
-		$query = $this->db->query("SELECT count(order_id) as 'Quantity' FROM orders");
-		if($query->num_rows()>0)
+
+
+		//get the details from jquery, we can store the data in the db
+		$data = array(
+			'order_id' => $this->input->post('oi'),
+			'customer_id' => $this->input->post('cu'),
+			'sales_rep' => $this->input->post('rep')
+	);
+
+		$query = $this->db->insert('orders' , $data);
+
+		if ($query)
 		{
-			$results = $query->row();
-
-			//generate new order number, we have the number of orders so we just allocate the next one
-			$results->Quantity += 1;
-			 //fill in the zero placeholders
-			//eg. OD0006 instead of OD6
-			$new = 'OD'.sprintf("%04d", $results->Quantity);
-
-
-
-
-			return $new;
-
+			return true;
 		}
 		else
 		{
-			return 'none';
+			return false;
 		}
 	}
 

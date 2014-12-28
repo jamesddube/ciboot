@@ -3,9 +3,7 @@
 <?php
 //check if the session has already started, (on first login the session would have started
 //when initialising user session
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+session_start();
 
 if($_SESSION['logged'] !== 'yes')
 {

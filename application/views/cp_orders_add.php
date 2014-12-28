@@ -47,19 +47,24 @@
 						<div class="well bg-white">
 
 
-								<legend class="pull-left width-full ">#<?php echo $order_num ?></legend>
+								<legend class="pull-left width-full ">#<?php echo $order_num ?><div id="results23"></div></legend>
 
 
 
 
 								<!-- begin row -->
-							<form action="g" method="POST" data-parsley-validate="true" name="form_order">
+
+							<form action="order_save" method="POST" data-parsley-validate="true" name="fo">
 								<div class="row" id="rw">
 									<!-- begin col-4 -->
+									<?php
+									if (!isset($saved_state)) {
+									?>
 									<div class="col-md-4" id="rw1">
 										<div class="form-group">
+
 											<label>Customer</label>
-											<select class="form-control">
+											<select class="form-control" name="cu">
 												<?php
 												$count = count($cust);
 												for($i=0;$i<$count;$i++)
@@ -70,6 +75,7 @@
 												}
 												?>
 											</select>
+
 										</div>
 									</div>
 									<!-- end col-4 -->
@@ -77,7 +83,7 @@
 									<div class="col-md-4" id="rw2">
 										<div class="form-group">
 											<label>Sales Rep</label>
-											<select class="form-control">
+											<select class="form-control" name="rep">
 												<?php
 												$count = count($reps);
 												for($i=0;$i<$count;$i++)
@@ -91,22 +97,58 @@
 										</div>
 									</div>
 									<!-- end col-4 -->
-							</form>
+									<input type="hidden" name="oi" value="<?php echo $order_num ?>">
+
 
 								</div>
 								<!-- end row -->
 						<div class="row" id="rw">
+
+								<!-- begin col-4 -->
+								<div class="col-md-offset-4 col-md-4" id="rw3">
+									<div class="form-group">
+										<label></label><br>
+
+										<div class="row">
+
+											<input type="submit" onclick="save_order()" id="btnsave" name="middle"
+											       class=" btn btn-block btn-success" value="Save">
+
+
+										</div>
+									</div>
+								</div>
+								<!-- end col-4 -->
+							<?php
+							}
+							if(isset($saved_state))
+							{
+							?>
 							<!-- begin col-4 -->
-							<div class="col-md-4" id="rw3">
+							<div class="col-md-offset-4 col-md-4" id="rw3">
 								<div class="form-group">
 									<label></label><br>
-									<div  name="middle" class=" btn btn-block btn-success" onclick="get()" >Save</div>
+									<div class="row">
+										<div id = "sv_results"><?php echo $msg ?></div>
+
+									</div>
 								</div>
 							</div>
 							<!-- end col-4 -->
+							<?php
+							}
+							?>
 						</div>
+							</form>
+
 
 						</div>
+						<?php
+
+						if(isset($saved_state) && $saved_state === 1)
+						{
+						?>
+
 						<div class="well bg-white">
 							<a  href="#modal-dialog" data-toggle="modal"><div  name="middle" class=" btn btn-block btn-success" >Add Product</div></a><br>
 							<table class="table table-bordered">
@@ -134,6 +176,9 @@
 
 							</table>
 						</div>
+						<?php
+						}
+						?>
 
 					</div>
 				</div>
@@ -186,7 +231,7 @@
 							<div class="col-md-4">
 								<div class="form-group">
 									<label>Total</label>
-									<h4>4566</h4>
+									<div id="results2"></div>
 								</div>
 							</div>
 							<!-- end col-4 -->
@@ -194,7 +239,7 @@
 				</div>
 				<div class="modal-footer">
 					<a href="javascript:;" class="btn btn-sm btn-white" data-dismiss="modal">Close</a>
-					<a href="javascript:;" class="btn btn-sm btn-success">Action</a>
+					<a href="javascript:;" class="btn btn-sm btn-success" onclick="get2()">Action</a>
 				</div>
 			</div>
 		</div>
@@ -261,8 +306,8 @@
 <!-- end page container -->
 
 <!-- ================== BEGIN BASE JS ================== -->
-<script src=<?php echo base_url("assets/plugins/jquery-1.8.2/jquery-1.8.2.min.js") ?>></script>
-
+	<script type="text/javascript" src=<?php echo base_url("assets/js/jquery.js")?>></script>
+	<script type="text/javascript" src=<?php echo base_url("assets/js/jquery-1.8.2.min.js")?>></script>
 <script src=<?php echo base_url("assets/plugins/jquery-ui-1.10.4/ui/minified/jquery-ui.min.js") ?>></script>
 <script src=<?php echo base_url("assets/plugins/bootstrap-3.2.0/js/bootstrap.min.js") ?>></script>
 <!--[if lt IE 9]>
@@ -286,20 +331,13 @@
 		FormWizard.init();
 	});
 </script>
-<script>
-	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-	ga('create', 'UA-53034621-1', 'auto');
-	ga('send', 'pageview');
-</script>
 	<script>
 		function anim()
 		{
 			$('#rw1').slideToggle(1000);
 			$('#rw2').slideToggle(1000);
+			$('#middle').slideToggle(1000);
 
 
 
@@ -308,10 +346,23 @@
 	</script>
 	<script type="text/javascript">
 
-		function get() {
-			$.post('',{name:form_order.name.value},
+		function save_order() {
+			$('#btnsave').slideToggle();
+			$('#btnsave').append('hfhfhfhf');
+			$.post('order_save',{cname:fo.name.value},
 				function(output){
-					$('#results').html(output).$('#rw1').slideToggle(1000)
+					$('#sv_results').html(output).fadeOut(1).fadeIn(1000);
+				});$('#rw2').slideToggle(1000);
+			$('#rw1').slideToggle(1000);
+
+		}
+	</script>
+	<script type="text/javascript">
+
+		function get2() {
+			$.post('jq',{name:fo.cu.value},
+				function(output){
+					$('#results23').html(output);
 				});
 		}
 	</script>

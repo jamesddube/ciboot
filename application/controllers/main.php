@@ -42,7 +42,7 @@ class Main extends CI_Controller {
 
 	public function getstock($value)
 	{
-				$this->load->model('model_products');
+				//$this->load->model('model_products');
 				$stocks = $this->model_products->get_stocks($value);
 				return $stocks;
 	}
@@ -73,7 +73,7 @@ class Main extends CI_Controller {
 
 
 //==================================================Start of Function=============================================================
-//================================================================================================================================	
+//================================================================================================================================
 	public function preseller()
 	{
 		if($this->session->userdata('is_logged_in'))
@@ -91,6 +91,12 @@ class Main extends CI_Controller {
 
 
 
+//==================================================                 =============================================================
+//==================================================     ORDERS      =============================================================
+//==================================================                 =============================================================
+
+
+
 //==================================================Start of Function=============================================================
 
 	public function orders()
@@ -99,7 +105,7 @@ class Main extends CI_Controller {
 		{
 
 			//get order info
-			$this->load->model('model_products');
+			//$this->load->model('model_products');
 			$orders = $this->model_products->get_orders();
 			//pass on user info to admin page
 				$data = array(
@@ -125,18 +131,18 @@ class Main extends CI_Controller {
 		{
 
 			//get salesrep info kkk
-			$this->load->model('model_users');
+			//$this->load->model('model_users');
 			$reps = $this->model_users->get_reps('all');
 
 			//get products info
-			$this->load->model('model_products');
+			//$this->load->model('model_products');
 			$products = $this->model_products->get_products('all');
 
 			//get customers info
 			$cust = $this->model_users->get_customers('all');
 
 			//get new order number
-			$order_num = $this->model_products->get_new_order_number();
+			$order_num = $this->model_orders->get_new_order_number();
 
 
 			//pass on user info to admin page
@@ -169,8 +175,8 @@ class Main extends CI_Controller {
 		if($this->session->userdata('is_logged_in'))
 		{
 			//get order info
-			$this->load->model('model_products');
-			$orders = $this->model_products->get_order_details($key);
+
+			$orders = $this->model_orders->get_order_details($key);
 
 
 
@@ -189,6 +195,67 @@ class Main extends CI_Controller {
 			}
 	}
 //==================================================End of Function===============================================================
+
+
+
+
+//====================================================================================================================================
+
+	public function jq_add()
+	{
+		echo rand (100,400);
+	}
+//====================================================================================================================================
+
+	public function order_save()
+	{
+
+		$oi = $this->input->post('oi');
+
+		//get salesrep info kkk
+		//$this->load->model('model_users');
+		$reps = $this->model_users->get_reps('all');
+
+		//get products info
+		//$this->load->model('model_products');
+		$products = $this->model_products->get_products('all');
+
+		//get customers info
+		$cust = $this->model_users->get_customers('all');
+
+		//get new order number
+		$order_num = $this->model_orders->get_new_order_number();
+
+		//pass on user info to admin page
+		$data = array(
+			'username' => $this->session->userdata('username'),
+			'reps' => $reps,
+			'cust' => $cust,
+			'order_num' => $order_num,
+			'products' => $products
+		);
+
+		//if( $this->model_orders->order_save())
+		if(1==1)
+		{
+			$data['msg'] =  "<div class='alert alert-success text-center'>Order Saved</div>";
+			$data['saved_state'] = 1;
+			$data['username'] = $this->session->userdata('username');
+			$data['order_num'] = $oi;
+
+			$this->load->view('cp_orders_add',$data);
+		}
+		else
+		{
+			$data['msg'] =  "<div class='alert alert-danger text-center'>Order Not Saved</div>";
+			$data['saved_state'] = 0;
+			$data['username'] = $this->session->userdata('username');
+			$data['order_num'] = $oi;
+
+			$this->load->view('cp_orders_add',$data);
+		}
+
+	}
 
 
 
@@ -236,7 +303,8 @@ class Main extends CI_Controller {
 	{
 		if($this->session->userdata('is_logged_in'))
 		{
-			$this->load->view('cp_order_add');
+			//$this->load->view('cp_order_add');
+			//$this->load->view('jq');
 		}
 		else 
 			{
@@ -433,7 +501,15 @@ class Main extends CI_Controller {
 		}
 	}
 //==================================================End of Function===============================================================
-//================================================================================================================================
+
+
+
+//==================================================Start of Function===============================================================
+
+
+
+
+
 }
 
 /* End of file welcome.php */

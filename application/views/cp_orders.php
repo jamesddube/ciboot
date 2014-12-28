@@ -11,13 +11,7 @@ require ('template/sidebar.php');
     <link href="<?php echo base_url('assets/plugins/gritter/css/jquery.gritter.css')?>" rel="stylesheet" />
 	<!-- ================== END PAGE LEsVEL STYLE ================== -->
 
-<?php
-if(isset($_GET['vw']))
-{
-	echo "gotcha";
-}
-else{
-?>
+
 <!-- begin #content -->
 		<div id="content" class="content">
 			<!-- begin breadcrumb -->
@@ -36,6 +30,10 @@ else{
 			    <!-- begin col-12 -->
 			    <div class="col-md-12">
 			        <!-- begin panel -->
+
+
+
+
                     <div class="panel panel-inverse">
                         <div class="panel-heading">
                             <div class="panel-heading-btn">
@@ -47,6 +45,14 @@ else{
                             <h4 class="panel-title">Table in Panel</h4>
                         </div>
                         <div class="panel-body">
+                        <!-- if no orders were found -->
+			        <?php
+                        if($orders==='nothing')
+                        {
+                            echo "<div class='alert alert-danger text-center'>No Orders Available, are the sales reps sleeping on the job?</div>";
+                        }
+                    else{
+                    ?>
                             <table class="table table-condensed  table-hover">
                                 <thead>
                                     <tr>
@@ -55,7 +61,7 @@ else{
                                         <th>Customer</th>
                                         <th>Route</th>
                                         <th>Sales Rep</th>
-                                        <th>Total</th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -65,7 +71,7 @@ else{
                                 $tot = 0;
                                 for($i = 0;$i<$count;$i++) {
 
-                                $tot = $tot + $orders[$i]['quantity'];
+
                                 ?>
                                     <tr>
                                         <td>
@@ -99,13 +105,7 @@ else{
                                             echo $orders[$i]['salesrep']
                                             ?>
                                         </td>
-                                        <td>
-                                            <?php
-                                            //print_r($orders);
 
-                                            echo $orders[$i]['quantity'];
-                                            ?>
-                                        </td>
                                     </tr>
                                 <?php
                                 }
@@ -124,19 +124,7 @@ else{
 		<!-- end #content -->
 		
 		</script>
-		<!-- #modal-message -->
-							<div class="modal modal-message fade" id="modal-message">
-								<div class="modal-dialog">
-									<div class="modal-content">
-										<div class="modal-header">
-											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-											<h4 class="modal-title">Approve Order</h4>
-										</div>
-										<div class="modal-body">
-											<p>Text in a modal</p>
-											<p>Do you want to approve the order ?</p>
-											<p>
-												<!-- begin #content -->
+
 		
 		
 			
@@ -144,15 +132,7 @@ else{
 }
 		
 		?>
-											</p>
-										</div>
-										<div class="modal-footer">
-											<a href="javascript:;" class="btn btn-sm btn-white" data-dismiss="modal">Close</a>
-											<a href="javascript:;" class="btn btn-sm btn-primary">Approve</a>
-										</div>
-									</div>
-								</div>
-							</div>
+
 		
 		<!-- ================== BEGIN PAGE LEVEL JS ================== -->
 	<script src="<?php echo base_url('assests/plugins/gritter/js/jquery.gritter.js')?>"></script>
