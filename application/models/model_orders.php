@@ -9,23 +9,26 @@
 class Model_orders extends CI_Model
 {
 	/**
-	 * @param $sql
+	 * @param $id
+	 * @internal param $sql
 	 * @return mixed
 	 */
-	function get_order_details($sql)
+	function get_order_details($id)
 	{
-
-		$query = $this->db->query ("SELECT * FROM vw_orders WHERE order_id = '$sql'");
-		if($query->num_rows()>0)
+		if($this->order_exists($id))
 		{
-			$result = $query->result_array ();
-			return $result;
 
-		}
-		else
-		{
-			return 'None';
-		}
+			$query = $this->db->query ("SELECT * FROM vw_orders WHERE order_id = '$id'");
+			if($query->num_rows()>0)
+			{
+				$result = $query->result_array ();
+				return $result;
+
+			}
+			else
+			{
+				return false;
+		}}
 
 	}
 
@@ -99,5 +102,17 @@ class Model_orders extends CI_Model
 		{
 			return false;
 		}
+	}
+
+	/**
+	 * @param $id order id
+	 * @return bool
+	 */
+	public function order_exists($id)
+	{
+		$query = $this->db->query("SELECT * FROM orders WHERE order_id = '$id'");
+
+		return $query->num_rows()===1? true : false;
+
 	}
 }

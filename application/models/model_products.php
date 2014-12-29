@@ -13,7 +13,7 @@ class Model_products extends CI_Model
 	 * @param $value
 	 * @return mixed
 	 */
-	function get_stocks($value)
+	function get_stock_by_cat($value)
 	{
 		$query = $this->db->query("SELECT sum(Quantity) as 'Quantity' FROM vw_stocks WHERE ProductCategory = '$value'");
 			
@@ -24,8 +24,17 @@ class Model_products extends CI_Model
 		}
 			
 	}
+	function get_stocks_by_id($value)
+	{
+		$query = $this->db->query("SELECT sum(Quantity) as 'Quantity' FROM vw_stocks WHERE ProductID = '$value'");
 
+		if($query->num_rows()>0);
+		{
+			$row = $query->row();
+			return $row->Quantity > 0 ? $row->Quantity : 0;
+		}
 
+	}
 
 	/**
 	 * this
@@ -72,6 +81,14 @@ class Model_products extends CI_Model
 		{
 			return false;
 		}
+	}
+	public function update_stock($id,$operator,$value)
+	{
+		$query = $this->db->query ("UPDATE stocks SET qty = (qty $operator $value) WHERE stock_id ='$id'");
+
+		return $this->db->affected_rows()=='1' ? true : $query;
+
+
 	}
 
 }

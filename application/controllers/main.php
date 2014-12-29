@@ -3,6 +3,75 @@
 class Main extends CI_Controller {
 
 //==================================================Start of Function=============================================================
+
+	public function order_process($order)
+	{
+		//get order details
+		//$data['details'] = $this->model_orders->get_order_details('OD0023');
+		if($details = $this->model_orders->get_order_details($order))
+		{
+
+			//$id = $details[0]['product_id'];
+			$data = array ();
+			//loop each quantity
+			for ($i = 0; $i < count ($details); $i++) {
+				$id = $details[$i]['product_id'];
+
+				//add quantity for each row to its particular product
+				array_key_exists ($id, $data) ? $data[$id] += $details[$i]['quantity'] : $data[$id] = $details[$i]['quantity'];
+
+			}
+			//initialise the array
+			$prod = array ();
+
+			//now lets check each product if there is sufficient quantity
+			foreach ($data as $key => $value) {
+				$stock_qty = $this->model_products->get_stocks_by_id ($key);
+
+				if ($stock_qty > $value) {
+					echo $key . '  available<br>';
+					$prod[$key] = 'available';
+				} else {
+					echo $key . ' unavailable required: ' . $value . ' available: ' . $stock_qty . '<br>';
+					$prod[$key] = 'unavailable';
+				}
+
+			}
+
+			//was there any product with insufficient stock? if yes we cannot proceed
+			if (in_array ('unavailable', $prod)) {
+				echo 'we cannot process';
+			} else
+			{
+				echo 'we can process';
+
+				foreach ($data as $key => $value)
+				{
+					$process = $this->model_products->update_stock($key,'-',$value);
+					if($process)
+					{
+						echo 'stock processed<br>';
+					}
+					else
+					{
+						echo 'stock not processed : '.$process.'<br>';
+					}
+				}
+
+
+
+
+			}
+			$this->load->view ('test');
+		}
+		else
+		{
+			echo 'we could not find the order';
+		}
+	}
+
+
+
 //================================================================================================================================
 	public function index()
 	{
@@ -10,11 +79,11 @@ class Main extends CI_Controller {
 			
 			if($this->session->userdata('role') == 'admin')
 			{
-				$this->load->model('model_products');
-				$stocks1 = $this->getstock(300);
-				$stocks2= $this->getstock(500);
-				$stocks3 = $this->getstock(1000);
-				$stocks4 = $this->getstock(2000);
+				//$this->load->model('model_products');
+				$stocks1 = $this->model_products->get_stock_by_cat(300);
+				$stocks2= $this->model_products->get_stock_by_cat(500);
+				$stocks3 = $this->model_products->get_stock_by_cat(1000);
+				$stocks4 = $this->model_products->get_stock_by_cat(2000);
 				$data['username'] = $this->session->userdata('username');
 				$data['p300'] = $stocks1;
 				$data['p500'] = $stocks2;
@@ -294,6 +363,14 @@ class Main extends CI_Controller {
 	}
 
 
+//======================================================================================================================================
+
+
+	//public function order_process()
+//{
+	//$this->model_orders
+	//echo "<div class='alert alert-success text-center'>Order Processed</div>";
+//}
 //======================================================================================================================================
 
 	public function order_add()
