@@ -61,6 +61,7 @@ require ('template/sidebar.php');
                                         <th>Customer</th>
                                         <th>Route</th>
                                         <th>Sales Rep</th>
+                                        <th>Action</th>
 
                                     </tr>
                                 </thead>
@@ -105,6 +106,14 @@ require ('template/sidebar.php');
                                             echo $orders[$i]['salesrep']
                                             ?>
                                         </td>
+                                        <td>
+                                            <a href="#modal-process"  data-toggle="modal">
+                                                <div class="btn btn-success btn-xs m-r-5">Process</div>
+                                            </a>
+                                            <a href="#modal-deny"  data-toggle="modal">
+                                                <div class="btn btn-danger btn-xs m-r-5  ">Deny</div>
+                                            </a>
+                                        </td>
 
                                     </tr>
                                 <?php
@@ -122,8 +131,47 @@ require ('template/sidebar.php');
             <!-- end row -->
 		</div>
 		<!-- end #content -->
-		
-		</script>
+
+    <!-- #modal-deny -->
+    <div class="modal modal-message fade" id="modal-deny">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">Modal Message Header</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Text in a modal</p>
+                    <p>Do you want to turn on location services so GPS can use your location ?</p>
+                </div>
+                <div class="modal-footer">
+                    <a href="javascript:;" class="btn btn-sm btn-white" data-dismiss="modal">Close</a>
+                    <a href="javascript:;" class="btn btn-sm btn-primary">Save Changes</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- #modal-process -->
+    <div class="modal modal-message fade" id="modal-process">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">Modal Message Header</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Text in a modal</p>
+                    <div class="row col-md-5" ><i class="fa fa-check-circle fa-5x "> </i>Do you want to turn on location services so GPS can use your location ?</div>
+                    <div class="row col-md-3 text-center "  ><i class="fa fa-check-circle fa-5x "></i></div>
+
+                </div>
+                <div class="modal-footer">
+                    <a href="javascript:;" class="btn btn-sm btn-white" data-dismiss="modal">Close</a>
+                    <a href="javascript:;" class="btn btn-sm btn-primary">Save Changes</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
 		
 		
