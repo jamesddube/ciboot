@@ -7,9 +7,13 @@ require ('template/sidebar.php');
 
 ?>
 
-	<!-- ================== BEGIN PAGE-Modals LEVEL STYLE ================== -->
-    <link href="<?php echo base_url('assets/plugins/gritter/css/jquery.gritter.css')?>" rel="stylesheet" />
-	<!-- ================== END PAGE LEsVEL STYLE ================== -->
+
+<!-- ================== BEGIN PAGE LEVEL JS ================== --
+<script type="text/javascript" src="<?php echo base_url("assets/plugins/gritter/js/jquery.gritter.js")?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/js/ui-modal-notification.demo.min.js')?>" ></script>
+<script type="text/javascript" src="<?php echo base_url('assets/js/apps.min.js')?>"></script>
+<!-- ================== END PAGE LEVEL JS ================== -->
+<script src="<?php echo base_url('assets/js/apps.min.js') ?>"></script>
 
 
 <!-- begin #content -->
@@ -74,31 +78,40 @@ require ('template/sidebar.php');
 
 
                                 ?>
-                                    <tr>
+                                    <tr class="t">
                                         <td>
                                             <?php
                                             //print_r($orders);
 
-                                            echo $orders[$i]['order_id']
+                                            echo $orders[$i]['date']
                                             ?>
                                         </td>
-                                        <td>
-                                            <a href="<?php echo base_url('main/orders_view/'.$orders[$i]['order_id'])?>"
+                                        <td class="23">
+
+                                            <form name="fm"><input type="hidden" id="oid" value="<?php echo $orders[$i]['order_id'] ?>" ></form>
+                                            <a  value="8" href="<?php echo base_url('main/orders_view/'.$orders[$i]['order_id'])?>"
                                                 ><?php
                                             //print_r($orders);
 
                                             echo $orders[$i]['order_id']
                                             ?></a>
+
                                         </td>
                                         <td>
                                             <?php
 
                                             //print_r($orders);
 
-                                            echo $orders[$i]['customer_id']
+                                            echo $orders[$i]['customer_name']
                                             ?>
                                         </td>
-                                        <td>Sakubva</td>
+                                        <td>
+                                            <?php
+                                            //print_r($orders);
+
+                                            echo $orders[$i]['route']
+                                            ?>
+                                        </td>
                                         <td>
                                             <?php
                                             //print_r($orders);
@@ -108,8 +121,9 @@ require ('template/sidebar.php');
                                         </td>
                                         <td>
                                             <a href="#modal-process"  data-toggle="modal">
-                                                <div class="btn btn-success btn-xs m-r-5">Process</div>
+                                                <button class="btn btn-success btn-xs m-r-5 btnproc" value="<?php echo $orders[$i]['order_id']  ?>" >Process</button>
                                             </a>
+                                            <button id="oid" class="tt" value="<?php echo $orders[$i]['order_id']  ?>" >Check</button>
                                             <a href="#modal-deny"  data-toggle="modal">
                                                 <div class="btn btn-danger btn-xs m-r-5  ">Deny</div>
                                             </a>
@@ -151,23 +165,25 @@ require ('template/sidebar.php');
             </div>
         </div>
     </div>
-    <!-- #modal-process -->
-    <div class="modal modal-message fade" id="modal-process">
+
+
+    <!-- #modal-alert -->
+    <div class="modal fade" id="modal-process">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title">Modal Message Header</h4>
+                    <h4>ORDER : <g class="modal-title"></g></h4>
                 </div>
                 <div class="modal-body">
-                    <p>Text in a modal</p>
-                    <div class="row col-md-5" ><i class="fa fa-check-circle fa-5x "> </i>Do you want to turn on location services so GPS can use your location ?</div>
-                    <div class="row col-md-3 text-center "  ><i class="fa fa-check-circle fa-5x "></i></div>
+                    <div class="">
 
+                        <p id="proc"></p>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <a href="javascript:;" class="btn btn-sm btn-white" data-dismiss="modal">Close</a>
-                    <a href="javascript:;" class="btn btn-sm btn-primary">Save Changes</a>
+                    <a href="javascript:;" id="pr" class="btn btn-sm btn-danger" onclick="get_qty()">Process</a>
                 </div>
             </div>
         </div>
@@ -181,14 +197,36 @@ require ('template/sidebar.php');
 		
 		?>
 
-		
-		<!-- ================== BEGIN PAGE LEVEL JS ================== -->
-	<script src="<?php echo base_url('assests/plugins/gritter/js/jquery.gritter.js')?>"></script>
-	<script src="<?php echo base_url('assests/js/ui-modal-notification.demo.min.js')?>"></script>
-	<script src="<?php echo base_url('asssets/js/apps.min.js')?>"></script>
-	<!-- ================== END PAGE LEVEL JS ================== -->
+
+<script type="text/javascript">
+        function get_qty()
+        {
+            var j = $("g").val();
+            $.post('order_process/'+j,{o:0},
+            function(output){
+            $('#proc').html(output);
+            });
+            $('#proc').fadeOut().fadeIn();
+            $("#pr").slideToggle();
+        }
+
+    $(document).ready(function(){
+        $(".btnproc").click(function(){
+
+            $("g").empty();
+            $('#proc').empty();
+
+            var j = $(this).val();
+            $("g").attr("value",j);
+            $("g").append(j);
+            $("#pr").show();
 
 
+
+
+        });
+    });
+</script>
 <?php 
 require ('template/footer.php');
 ?>

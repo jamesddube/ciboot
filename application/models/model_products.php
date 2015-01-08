@@ -3,7 +3,8 @@ class Model_products extends CI_Model
 {
 	 function get_products()
 	{
-		$query = $this->db->query("SELECT * FROM products order by prodcategory desc");
+		$aximos = $this->load->database('aximos',true);
+		$query = $aximos->query("SELECT * FROM vwProducts order by PackSize desc");
 			
 		return $query->result_array();
 			
@@ -44,7 +45,7 @@ class Model_products extends CI_Model
 	function get_orders()
 	{
 
-		$query = $this->db->query ("SELECT * FROM orders order by order_id desc");
+		$query = $this->db->query ("SELECT * FROM vw_orders where deleted = 0  and `status` = 'unprocessed' order by order_id desc");
 		if($query->num_rows()>0)
 		{
 			$result = $query->result_array ();

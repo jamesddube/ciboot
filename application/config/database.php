@@ -65,11 +65,11 @@ $db['default']['autoinit'] = TRUE;
 $db['default']['stricton'] = FALSE;
 
 
-$db['aximos']['hostname'] = '127.0.0.1';
+$db['aximos']['hostname'] = "Driver={SQL Server Native Client 11.0};Server=SWEAD-PC\SQLEXPRESS;database=aximosmbc;";
 $db['aximos']['username'] = 'sa';
 $db['aximos']['password'] = 'sead2301';
-$db['aximos']['database'] = 'h';
-$db['aximos']['dbdriver'] = 'sqlsrv';
+$db['aximos']['database'] = 'AXIMOSMBC';
+$db['aximos']['dbdriver'] = 'odbc';
 $db['aximos']['dbprefix'] = '';
 $db['aximos']['pconnect'] = TRUE;
 $db['aximos']['db_debug'] = TRUE;
@@ -80,6 +80,7 @@ $db['aximos']['dbcollat'] = 'utf8_general_ci';
 $db['aximos']['swap_pre'] = '';
 $db['aximos']['autoinit'] = TRUE;
 $db['aximos']['stricton'] = FALSE;
+
 
 /* End of file database.php */
 /* Location: ./application/config/database.php */

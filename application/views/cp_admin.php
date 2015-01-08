@@ -1,7 +1,13 @@
 
 
 <?php
-$title = "Dashboard";
+//echo date('y-01-01');
+//echo $effectiveDate = date('y-01-01');
+//echo $effectiveDate2 = date('Y-m-d', strtotime("-1 months", strtotime($effectiveDate)));
+echo $litre =$OA1000[0];
+echo $ks =$OA300[0];
+//echo $litre2 =$analytics[0];
+echo $title = "Dashboard";
 require ('template/header.php');
 require ('template/sidebar.php');
 $p1 = $p300;
@@ -12,7 +18,21 @@ echo $ra = rand(40,100);
 ?>
 
 
+<!-- ================== BEGIN PAGE LEVEL CSS STYLE ==================-->
+    <link href="<?php echo base_url("assets/plugins/jquery-jvectormap/jquery-jvectormap-1.2.2.css")?>" rel="stylesheet" />
+    <link href="<?php echo base_url("assets/plugins/bootstrap-calendar/css/bootstrap_calendar.css")?>" rel="stylesheet" />
+    <link href="<?php echo base_url("assets/plugins/gritter/css/jquery.gritter.css" )?>"rel="stylesheet" />
+    <link href="<?php echo base_url("assets/plugins/morris/morris.css")?>" rel="stylesheet" />
+    <!-- ================== END PAGE LEVEL CSS STYLE ================== --
 
+<!-- ================== BEGIN PAGE LEVEL JS ================== -->
+<script src="<?php echo base_url("assets/plugins/morris/raphael.min.js") ?>"></script>
+<script src="<?php echo base_url("assets/plugins/morris/morris.js") ?>"></script>
+<script src="<?php echo base_url("assets/plugins/jquery-jvectormap/jquery-jvectormap-1.2.2.min.js") ?>"></script>
+<script src="<?php echo base_url("assets/plugins/jquery-jvectormap/jquery-jvectormap-world-merc-en.js") ?>"></script>
+<script src="<?php echo base_url("assets/plugins/gritter/js/jquery.gritter.js") ?>"></script>
+<script src="<?php echo base_url("assets/js/dashboard-v2.min.js") ?>"></script>
+<!-- ================== END PAGE LEVEL JS ================== -->
 
 
 <!-- begin #content -->
@@ -293,15 +313,35 @@ echo $ra = rand(40,100);
 <!-- end #content -->
 
 <!--custom script to insert values onto Order Analysis Chart-->
-<script>
 
-var p1000 = <?php echo $ra ?>
-alert(p1000);
+<script>
+    var litre =[];
+    var pet =[];
+    var kingsize =[];
+
+
+    var analytics300 = <?php echo json_encode( $OA300) ?>;
+    var analytics500 = <?php echo json_encode( $OA500) ?>;
+    var analytics1000 = <?php echo json_encode( $OA1000) ?>;
+    for(var i =0 ; i< 12;i++)
+    {
+         kingsize[i] = analytics300[i];
+    }
+    for(var i =0 ; i< 12;i++)
+    {
+         pet[i] = analytics500[i];
+    }
+    for(var i =0 ; i< 12;i++)
+    {
+        litre[i] = analytics1000[i];
+    }
+
 </script>
 <script>
     $(document).ready(function() {
         App.init();
         DashboardV2.init();
+
 
     });
 </script>

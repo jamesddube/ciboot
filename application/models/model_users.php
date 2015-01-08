@@ -23,12 +23,15 @@ class Model_users extends CI_Model
 				//codeigniter sessions don't offer the security i need
 
 				$_SESSION['logged'] = 'yes';
+				$_SESSION['picture'] = $row->picture;
+
 
 				$data = array
 				(
 					'email' => $this->input->post ('Email'),
 					'is_logged_in' => 1,
 					'role' => $row->role,
+					'picture' => $row->picture,
 					'username' => $row->fname . " " . $row->surname
 				);
 				$this->session->set_userdata ($data);
@@ -136,6 +139,31 @@ class Model_users extends CI_Model
 	public function verify ($password, $hashedPassword)
 	{
 		return crypt ($password, $hashedPassword) === $hashedPassword ? "yes" : "no";
+	}
+
+	public function get_users($id)
+	{
+		if('all' === $id)
+		{
+			$query = $this->db->query("SELECT * FROM users ");
+
+			if($query->num_rows()>0);
+			{
+				$result = $query->result_array ();
+				return $result;
+			}
+		}
+		else
+		{
+			$query = $this->db->query("SELECT * FROM users WHERE email = '$id'");
+
+			if($query->num_rows()>0);
+			{
+				$result = $query->result_array ();
+				return $result;
+			}
+
+		}
 	}
 
 }

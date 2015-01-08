@@ -1,5 +1,8 @@
 
 	<?php
+	//echo "<pre>";
+	//print_r($ax_cust);
+	//echo "</pre>";
 	$title = "Orders";
 	$test = 0;
 	require('template/header.php')
@@ -67,11 +70,11 @@
 											<label>Customer</label>
 											<select class="form-control" name="cu">
 												<?php
-												$count = count($cust);
+												$count = count($ax_cust);
 												for($i=0;$i<$count;$i++)
 												{
 												?>
-												<option value="<?php echo $cust[$i]['customer_id'] ?>"><?php echo $cust[$i]['customer_name'] ?></option>
+												<option value="<?php echo $ax_cust[$i]['CustomerID'] ?>"><?php echo $ax_cust[$i]['CustomerName'] ?></option>
 												<?php
 												}
 												?>
@@ -250,7 +253,7 @@
 										for($i=0;$i<$count;$i++)
 										{
 											?>
-											<option value="<?php echo $products[$i]['product_id'] ?>"><?php echo $products[$i]['prodname']. "   (".$products[$i]['prodcategory']."ml)" ?></option>
+											<option value="<?php echo $products[$i]['Code'] ?>"><?php echo $products[$i]['Description']. "   (".$products[$i]['PackSize']."ml)" ?></option>
 										<?php
 										}
 										?>

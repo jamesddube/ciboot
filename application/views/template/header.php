@@ -1,3 +1,8 @@
+<?php
+$ci =& get_instance();
+echo $ci->session->userdata('picture');
+echo 'kkkkkkkkkkkkkkkkkkkkkkkkkk' ?>
+
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
 <!--[if !IE]><!-->
@@ -5,7 +10,7 @@
 <!--<![endif]-->
 <head>
     <meta charset="utf-8" />
-    <title>Dashboard</title>
+    <title><?php echo $title ?></title>
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
     <meta content="" name="description" />
     <meta content="" name="author" />
@@ -17,24 +22,38 @@
     <link href="<?php echo base_url("assets/plugins/font-awesome-4.2.0/css/font-awesome.min.css" )?>"rel="stylesheet" />
     <link href="<?php echo base_url("assets/css/style.min.css" )?>"rel="stylesheet" />
     <link href="<?php echo base_url("assets/css/style-responsive.min.css")?> "rel="stylesheet" />
-
-
-
-
-    ?>
+    <link href="<?php echo base_url("assets/plugins/gritter/css/jquery.gritter.css")?>" rel="stylesheet" />
     <link href="<?php echo base_url("assets/css/theme/default.css" )?>"rel="stylesheet" id="theme" />
     <!-- ================== END BASE CSS STYLE ================== -->
 
-    <!-- ================== BEGIN PAGE LEVEL CSS STYLE ================== -->
+    <!-- ================== BEGIN PAGE LEVEL CSS STYLE ==================-->
     <link href="<?php echo base_url("assets/plugins/jquery-jvectormap/jquery-jvectormap-1.2.2.css")?>" rel="stylesheet" />
     <link href="<?php echo base_url("assets/plugins/bootstrap-calendar/css/bootstrap_calendar.css")?>" rel="stylesheet" />
     <link href="<?php echo base_url("assets/plugins/gritter/css/jquery.gritter.css" )?>"rel="stylesheet" />
     <link href="<?php echo base_url("assets/plugins/morris/morris.css")?>" rel="stylesheet" />
     <!-- ================== END PAGE LEVEL CSS STYLE ================== -->
-    
+
     <!-- ================== BEGIN PAGE LEVEL STYLE ================== -->
 	<link href="<?php echo base_url("assets/plugins/DataTables-1.10.2/css/data-table.css" ) ?>"rel="stylesheet" />
 	<!-- ================== END PAGE LEVEL STYLE ================== -->
+
+    <!-- ================== BEGIN BASE JS ================== -->
+    <script src=<?php echo base_url("assets/plugins/jquery-1.8.2/jquery-1.8.2.min.js") ?>></script>
+    <script src=<?php echo base_url("assets/plugins/jquery-ui-1.10.4/ui/minified/jquery-ui.min.js") ?>></script>
+    <script src=<?php echo base_url("assets/plugins/bootstrap-3.2.0/js/bootstrap.min.js") ?>></script>
+    <script src="<?php echo base_url("assets/js/apps.min.js") ?>"></script>
+    <!--[if lt IE 9]>
+    <script src=<?php echo base_url("assets/crossbrowserjs/html5shiv.js") ?>></script>
+    <script src=<?php echo base_url("assets/crossbrowserjs/respond.min.js") ?>></script>
+    <script src=<?php echo base_url("assets/crossbrowserjs/excanvas.min.js") ?>></script>
+<![endif]-->
+    <script src=<?php echo base_url("assets/plugins/slimscroll/jquery.slimscroll.min.js") ?>></script>
+    <script src=<?php echo base_url("assets/plugins/jquery-cookie/jquery.cookie.js") ?>></script>
+    <script src=<?php echo base_url("assets/js/dashboard-v2.min.js") ?>></script>
+    <!-- ================== END BASE JS ================== -->
+
+
+
 
 </head>
 <body>
@@ -130,7 +149,7 @@
             </li>
             <li class="dropdown navbar-user">
                 <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
-                    <img src="<?php echo base_url("assets/img/prof.jpg")?>" alt="" />
+                    <img src="<?php echo base_url('assets/img/users/'.$ci->session->userdata('picture'))?>" alt="gg" />
                     <span class="hidden-xs"><?php  echo $username; ?></span> <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu animated fadeInLeft">

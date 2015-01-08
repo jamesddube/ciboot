@@ -2,71 +2,129 @@
 
 class Main extends CI_Controller {
 
-//==================================================Start of Function=============================================================
+//==================================================Start of Controller=============================================================
+
+
+public function test()
+{
+	//lets get the customer list from aximos
+	$aximos = $this->load->database('aximos',true);
+
+	$data = [
+		'username' => $this->session->userdata('username'),
+		'cust' => $result
+
+
+	];
+
+	$query = "SELECT * FROM [tblCustomers]";
+	$result = $aximos->query($query);
+
+	$result->result_array();
+
+
+	$this->load->view('test',$data);
+}
+//==================================================================================================================================
 
 	public function order_process($order)
 	{
+		//$orders = $this->input->post('oi');
 		//get order details
 		//$data['details'] = $this->model_orders->get_order_details('OD0023');
 		if($details = $this->model_orders->get_order_details($order))
 		{
+			if($details> 0) {
 
-			//$id = $details[0]['product_id'];
-			$data = array ();
-			//loop each quantity
-			for ($i = 0; $i < count ($details); $i++) {
-				$id = $details[$i]['product_id'];
+				//$id = $details[0]['product_id'];
+				$data = array ();
+				//loop each quantity
+				for ($i = 0; $i < count ($details); $i++) {
+					$id = $details[$i]['product_id'];
 
-				//add quantity for each row to its particular product
-				array_key_exists ($id, $data) ? $data[$id] += $details[$i]['quantity'] : $data[$id] = $details[$i]['quantity'];
+					//add quantity for each row to its particular product
+					array_key_exists ($id, $data) ? $data[$id] += $details[$i]['quantity'] : $data[$id] = $details[$i]['quantity'];
 
-			}
-			//initialise the array
-			$prod = array ();
+				}
+				//initialise the array
+				$prod = array ();
 
-			//now lets check each product if there is sufficient quantity
-			foreach ($data as $key => $value) {
-				$stock_qty = $this->model_products->get_stocks_by_id ($key);
+				//now lets check each product if there is sufficient quantity
+				foreach ($data as $key => $value) {
+					$stock_qty = $this->model_products->get_stocks_by_id ($key);
 
-				if ($stock_qty > $value) {
-					echo $key . '  available<br>';
-					$prod[$key] = 'available';
-				} else {
-					echo $key . ' unavailable required: ' . $value . ' available: ' . $stock_qty . '<br>';
-					$prod[$key] = 'unavailable';
+					if ($stock_qty > $value) {
+						$msg[$key] =  $key . '  available<br>';
+						$prod[$key] = 'available';
+					} else {
+						$msg[$key] = $key . ' unavailable required: ' . $value . ' available: ' . $stock_qty . '<br>';
+						$prod[$key] = 'unavailable';
+					}
+
 				}
 
-			}
-
-			//was there any product with insufficient stock? if yes we cannot proceed
-			if (in_array ('unavailable', $prod)) {
-				echo 'we cannot process';
-			} else
-			{
-				echo 'we can process';
-
-				foreach ($data as $key => $value)
+				//was there any product with insufficient stock? if yes we cannot proceed
+				if (in_array ('unavailable', $prod))
 				{
-					$process = $this->model_products->update_stock($key,'-',$value);
-					if($process)
+					echo "<div class='alert-danger alert m-b-0'>";
+					echo "<h4><i class='fa fa-warning'></i> Error Processing Order</h4>";
+					echo 'we cannot process order: ' . $order.'<br>';
+
+					//loop through the messages
+					foreach($msg as $row)
 					{
-						echo 'stock processed<br>';
+						echo $row;
+					}
+					echo "</div>";
+
+				} else
+				{
+					//we can process
+
+					foreach ($data as $key => $value) {
+						$process = $this->model_products->update_stock ($key, '-', $value);
+						if ($process) {
+							$stock[$key] = 'processed';
+						} else {
+							$stock[$key] = 'unprocessed';
+						}
+					}
+					if(in_array('unprcessed',$stock))
+					{
+						echo "there was an error updating stock for the order";
 					}
 					else
 					{
-						echo 'stock not processed : '.$process.'<br>';
+						$op = $this->model_orders->update_order('process',$order);
+						if($this->model_orders->update_order('process',$order))
+						{
+							//order processed
+							echo "<div class='alert-success alert m-b-0'>";
+							echo 'Order: ' . $order.' was sucessfully processed <br></div>';
+						}
+						else
+						{
+							echo "<div class='alert-danger alert m-b-0'>";
+							echo "<h4><i class='fa fa-warning'></i>Error</h4>";
+							echo 'Order: ' . $order.' was not processed <br>';
+							echo 'Details: ' . $op.' <br></div>';
+
+
+						}
 					}
+
+
 				}
-
-
-
-
 			}
-			$this->load->view ('test');
+			else
+			{
+				echo 'no products have been added to the order';
+			}
+
 		}
 		else
 		{
-			echo 'we could not find the order';
+			echo 'we could not find the order:'.$order;
 		}
 	}
 
@@ -80,6 +138,9 @@ class Main extends CI_Controller {
 			if($this->session->userdata('role') == 'admin')
 			{
 				//$this->load->model('model_products');
+				$OA300 = $this->model_orders->order_analytics(300);
+				$OA500 = $this->model_orders->order_analytics(500);
+				$OA1000 = $this->model_orders->order_analytics(1000);
 				$stocks1 = $this->model_products->get_stock_by_cat(300);
 				$stocks2= $this->model_products->get_stock_by_cat(500);
 				$stocks3 = $this->model_products->get_stock_by_cat(1000);
@@ -89,9 +150,13 @@ class Main extends CI_Controller {
 				$data['p500'] = $stocks2;
 				$data['p1000'] = $stocks3;
 				$data['p2000'] = $stocks4;
+				$data['OA300'] = $OA300;
+				$data['OA500'] = $OA500;
+				$data['OA1000'] = $OA1000;
 				//pass on user info to admin page
 				
 				$this->load->view('cp_admin',$data);
+				//$this->load->view('cp_admin',$data);
 			}
 			else 
 				{
@@ -195,9 +260,14 @@ class Main extends CI_Controller {
 	{
 		if($this->session->userdata('is_logged_in'))
 		{
+			//lets get the customer list from aximos
+			$this->load->model('model_aximos');
+
+			$ax_cust = $this->model_aximos->get_customers();
+
+
 
 			//get salesrep info kkk
-			//$this->load->model('model_users');
 			$reps = $this->model_users->get_reps('all');
 
 			//get products info
@@ -216,6 +286,7 @@ class Main extends CI_Controller {
 				'username' => $this->session->userdata('username'),
 					'reps' => $reps,
 					'cust' => $cust,
+					'ax_cust' => $ax_cust,
 					'order_num' => $order_num,
 					'products' => $products
 				);

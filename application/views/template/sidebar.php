@@ -25,7 +25,7 @@
         <ul class="nav">
             <li class="nav-profile">
                 <div class="image">
-                    <a href="javascript:;"><img src="<?php echo  base_url("assets/img/prof.jpg")?>" alt="" /></a>
+                    <a href="javascript:;"><img src="<?php echo base_url('assets/img/users/'.$ci->session->userdata('picture'))?>" alt="" /></a>
                 </div>
                 <div class="info">
                     <?php
@@ -53,6 +53,10 @@
         {
             $nav[5] = 'active';
         }
+        if($title == 'Users')
+        {
+            $nav[2] = 'active';
+        }
         ?>
 
         <ul class="nav">
@@ -79,26 +83,26 @@
                 <li><a href="email_newsletter.html">Newsletter Template</a></li>
             </ul>
         </li>
-        <li class="has-sub">
+        <li class="<?php echo "has-sub"." ".$nav[2]?>">
             <a href="javascript:;">
                 <b class="caret pull-right"></b>
                 <i class="fa fa-users"></i>
                 <span>Users</span>
             </a>
             <ul class="sub-menu">
-                <li><a href="chart-flot.html">Flot Chart</a></li>
+                <li><a href="<?php echo base_url('users') ?>">View Users</a></li>
                 <li><a href="chart-morris.html">Morris Chart</a></li>
             </ul>
         </li>
 
-            <li class="has-sub">
+            <li class="<?php echo "has-sub"." ".$nav[3]?>">
                 <a href="javascript:;">
                     <b class="caret pull-right"></b>
                     <i class="fa fa-pencil-square-o"></i>
                     <span>Orders</span>
                 </a>
                 <ul class="sub-menu">
-                    <li><a href="<?php echo base_url('main/orders_add') ?>"> <span>Add Order <i class="fa fa-pencil-square-o"></i></span></a></li>
+                    <li><a href="<?php echo base_url('main/orders_add') ?>"> <span>Add Order <i class="fa fa-pencil-square-o text-theme m-l-5"></i></span></a></li>
                     <li><a href="<?php echo base_url('main/orders') ?>"><i class="fa fa-pencil-square-o"></i> <span>Pending Orders </span></a></li>
                     <li><a href="<?php echo base_url('main/orders') ?>"><i class="fa fa-pencil-square-o"></i> <span>Processed Orders </span></a></li>
 

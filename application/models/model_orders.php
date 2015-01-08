@@ -17,8 +17,7 @@ class Model_orders extends CI_Model
 	{
 		if($this->order_exists($id))
 		{
-
-			$query = $this->db->query ("SELECT * FROM vw_orders WHERE order_id = '$id'");
+			$query = $this->db->query ("SELECT * FROM vw_order_details WHERE order_id = '$id'");
 			if($query->num_rows()>0)
 			{
 				$result = $query->result_array ();
@@ -28,7 +27,8 @@ class Model_orders extends CI_Model
 			else
 			{
 				return false;
-		}}
+			}
+		}
 
 	}
 
@@ -113,6 +113,46 @@ class Model_orders extends CI_Model
 		$query = $this->db->query("SELECT * FROM orders WHERE order_id = '$id'");
 
 		return $query->num_rows()===1? true : false;
+
+	}
+	public function update_order($operation, $order)
+	{
+		if($operation === 'process')
+		{
+			return $this->db->query ("UPDATE orders SET `status`='processed' WHERE `order_id`='$order'") ? true : false;
+
+		}
+
+	}
+	public function order_analytics($packsize)
+	{
+
+		//set the initial date
+		$startdate =  date('y-01-01');
+		$enddate =  date('y-02-01');
+		for ($i = 0; $i < 12 ; $i++ )
+		{
+
+			$query = $this->db->query("select sum(quantity) as 'quantity' from vw_order_details where `date` between '$startdate' and '$enddate' and packsize = $packsize ");
+
+			$row = $query->row ();
+			if($row->quantity>0) {
+				$analytics[$i] = $row->quantity;
+
+			}
+			else
+			{
+				$analytics[$i] = 0;
+			}
+
+			$startdate = date ('Y-m-d', strtotime ("+1 months", strtotime ($startdate)));
+			$enddate = date ('Y-m-d', strtotime ("+1 months", strtotime ($enddate)));
+		}
+		return $analytics;
+
+		//get the first month
+
+		//
 
 	}
 }
