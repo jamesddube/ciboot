@@ -5,7 +5,7 @@
 <!--<![endif]-->
 <head>
 	<meta charset="utf-8" />
-	<title>Color Admin | Login Page</title>
+	<title>Login Page</title>
 	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
 	<meta content="" name="description" />
 	<meta content="" name="author" />
@@ -46,7 +46,7 @@
             </div>
             <!-- end brand -->
             <div class="login-content">
-                <form action="<?php echo base_url('main/login')?>" method="post" class="margin-bottom-0">
+                <form action="<?php echo base_url('auth/login')?>" method="post" class="margin-bottom-0">
                 	<?php
 					if(validation_errors() != null)
 					{

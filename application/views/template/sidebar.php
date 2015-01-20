@@ -1,21 +1,6 @@
 
 
-        <?php
-        //check if the session has already started, (on first login the session would have started
-        //when initialising user session
-        if(!isset($_SESSION['logged']))
 
-        {
-            session_start();
-        }
-
-
-        if($_SESSION['logged'] !== 'yes')
-        {
-            redirect(base_url("main/restricted" ));
-            exit;
-        }
-        ?>
 
         <!-- begin #sidebar -->
         <div id="sidebar" class="sidebar sidebar-grid">
@@ -25,11 +10,11 @@
         <ul class="nav">
             <li class="nav-profile">
                 <div class="image">
-                    <a href="javascript:;"><img src="<?php echo base_url('assets/img/users/'.$ci->session->userdata('picture'))?>" alt="" /></a>
+                    <a href="javascript:;"><img src="<?php  echo base_url('assets/img/users/'.$ci->session->userdata('picture'))?>" alt="" /></a>
                 </div>
                 <div class="info">
                     <?php
-                    echo $username
+                    echo $ci->session->userdata('username');
                     ?>
                     <small>Front end developer</small>
                 </div>
@@ -102,8 +87,8 @@
                     <span>Orders</span>
                 </a>
                 <ul class="sub-menu">
-                    <li><a href="<?php echo base_url('main/orders_add') ?>"> <span>Add Order <i class="fa fa-pencil-square-o text-theme m-l-5"></i></span></a></li>
-                    <li><a href="<?php echo base_url('main/orders') ?>"><i class="fa fa-pencil-square-o"></i> <span>Pending Orders </span></a></li>
+                    <li><a href="<?php echo base_url('orders/add') ?>"> <span>Add Order <i class="fa fa-pencil-square-o text-theme m-l-5"></i></span></a></li>
+                    <li><a href="<?php echo base_url('orders') ?>"><i class="fa fa-pencil-square-o"></i> <span>Pending Orders </span></a></li>
                     <li><a href="<?php echo base_url('main/orders') ?>"><i class="fa fa-pencil-square-o"></i> <span>Processed Orders </span></a></li>
 
                 </ul>

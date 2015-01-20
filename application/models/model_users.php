@@ -25,11 +25,10 @@ class Model_users extends CI_Model
 				$_SESSION['logged'] = 'yes';
 				$_SESSION['picture'] = $row->picture;
 
-
 				$data = array
 				(
 					'email' => $this->input->post ('Email'),
-					'is_logged_in' => 1,
+					'logged_in' => TRUE,
 					'role' => $row->role,
 					'picture' => $row->picture,
 					'username' => $row->fname . " " . $row->surname
@@ -127,6 +126,13 @@ class Model_users extends CI_Model
 		}
 	}
 
+	/**
+	 * @param $password
+	 * @return array the first element being the pasword, second is salt....
+	 * but funny thing Blowfish does not need salt....i should remove the salt (*note to self)
+	 *
+	 * Do not touch!! Its magic!!
+	 */
 	public function generateHash ($password)
 	{
 		if (defined ("CRYPT_BLOWFISH") && CRYPT_BLOWFISH) {

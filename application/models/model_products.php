@@ -42,22 +42,7 @@ class Model_products extends CI_Model
 	 * @return string
 	 * @desc this is a sample
 	 */
-	function get_orders()
-	{
 
-		$query = $this->db->query ("SELECT * FROM vw_orders where deleted = 0  and `status` = 'unprocessed' order by order_id desc");
-		if($query->num_rows()>0)
-		{
-			$result = $query->result_array ();
-			return $result;
-
-		}
-		else
-		{
-			return 'nothing';
-		}
-
-	}
 
 
 

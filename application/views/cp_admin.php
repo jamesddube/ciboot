@@ -314,6 +314,15 @@ echo $ra = rand(40,100);
 
 <!--custom script to insert values onto Order Analysis Chart-->
 
+
+
+
+<?php 
+require ('template/footer.php');
+?>
+<!-- ================== BEGIN PAGE JS ================== -->
+<script src="<?php echo base_url('assets/js/dashboard-v2.min.js') ?>"></script>
+<!-- ================== END PAGE JS ================== -->
 <script>
     var litre =[];
     var pet =[];
@@ -325,11 +334,11 @@ echo $ra = rand(40,100);
     var analytics1000 = <?php echo json_encode( $OA1000) ?>;
     for(var i =0 ; i< 12;i++)
     {
-         kingsize[i] = analytics300[i];
+        kingsize[i] = analytics300[i];
     }
     for(var i =0 ; i< 12;i++)
     {
-         pet[i] = analytics500[i];
+        pet[i] = analytics500[i];
     }
     for(var i =0 ; i< 12;i++)
     {
@@ -337,14 +346,3 @@ echo $ra = rand(40,100);
     }
 
 </script>
-<script>
-    $(document).ready(function() {
-        App.init();
-        DashboardV2.init();
-
-
-    });
-</script>
-<?php 
-require ('template/footer.php');
-?>

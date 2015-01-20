@@ -18,9 +18,13 @@ class Model_orders extends CI_Model
 		if($this->order_exists($id))
 		{
 			$query = $this->db->query ("SELECT * FROM vw_order_details WHERE order_id = '$id'");
+
+			//get product info from aximos
 			if($query->num_rows()>0)
 			{
 				$result = $query->result_array ();
+
+				//get product info from aximos
 				return $result;
 
 			}
@@ -31,6 +35,39 @@ class Model_orders extends CI_Model
 		}
 
 	}
+
+
+
+	function get_orders($status)
+	{
+		if($status == null or "")
+		{
+			$status = 'unprocessed';
+
+		}
+		elseif($status == "processed")
+		{
+			$status = 'processed';
+
+		}
+
+		$query = $this->db->query ("SELECT * FROM vw_orders where deleted = 0  and `status` = '$status' order by order_id desc");
+		if($query->num_rows()>0)
+		{
+			$result = $query->result_array ();
+			return $result;
+
+		}
+		else
+		{
+			return 'nothing';
+		}
+
+	}
+
+
+
+
 
 	/**
 	 * @return string
@@ -60,25 +97,21 @@ class Model_orders extends CI_Model
 		}
 	}
 
-	public function order_save()
+	public function order_save($oi,$cu,$rep)
 	{
 
 
 		//get the details from jquery, we can store the data in the db
-		$data1 = array(
-			'order_id' => $this->input->post('oi'),
-			'customer_id' => $this->input->post('cu'),
-			'salesrep' => $this->input->post('rep')
-		);
 		$data = array(
-			'order_id' => 1,
-			'customer_id' => 6,
-			'sales_rep' => 2
+			'order_id' => $oi,
+			'customer_id' => $cu,
+			'salesrep' => $rep
 		);
 
 
 
-		if ($query = $this->db->insert ('orders',$data1))
+
+		if ($query = $this->db->insert ('orders',$data))
 		{
 			return true;
 		}

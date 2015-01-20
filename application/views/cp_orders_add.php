@@ -15,10 +15,7 @@
 	<!-- begin #sidebar -->
 	<?php require('template/sidebar.php') ?>
 	<!-- end #sidebar -->
-	<!-- ================== BEGIN PAGE LEVEL STYLE ================== -->
-	<link href=<?php echo base_url("assets/plugins/bootstrap-wizard/css/bwizard.min.css") ?> rel="stylesheet" />
-	<link href=<?php echo base_url("assets/plugins/parsley/src/parsley.css") ?> rel="stylesheet" />
-	<!-- ================== END PAGE LEVEL STYLE ================== -->
+
 	<!-- begin #content -->
 	<div id="content" class="content">
 		<!-- begin breadcrumb -->
@@ -52,29 +49,23 @@
 
 
 								<legend class="pull-left width-full ">#<?php echo $order_num ?><div id="results23"></div></legend>
-
-
-
-
 								<!-- begin row -->
 
-							<form action="order_save" method="POST" data-parsley-validate="true" name="fo">
+							<form method="POST" data-parsley-validate="true" name="order_form">
 								<div class="row" id="rw">
 									<!-- begin col-4 -->
-									<?php
-									if (!isset($saved_state)) {
-									?>
-									<div class="col-md-4" id="rw1">
+
+									<div class="col-md-6" id="rw1">
 										<div class="form-group">
 
 											<label>Customer</label>
-											<select class="form-control" name="cu">
+											<select class="form-control" name="cname">
 												<?php
-												$count = count($ax_cust);
+												$count = count($cust);
 												for($i=0;$i<$count;$i++)
 												{
 												?>
-												<option value="<?php echo $ax_cust[$i]['CustomerID'] ?>"><?php echo $ax_cust[$i]['CustomerName'] ?></option>
+												<option value="<?php echo $cust[$i]['CustomerID'] ?>"><?php echo $cust[$i]['CustomerName'] ?></option>
 												<?php
 												}
 												?>
@@ -84,7 +75,7 @@
 									</div>
 									<!-- end col-4 -->
 									<!-- begin col-4 -->
-									<div class="col-md-4" id="rw2">
+									<div class="col-md-6" id="rw2">
 										<div class="form-group">
 											<label>Sales Rep</label>
 											<select class="form-control" name="rep">
@@ -106,47 +97,35 @@
 
 								</div>
 								<!-- end row -->
-						<div class="row" id="rw">
+								<div class="row" id="rw">
 
-								<!-- begin col-4 -->
-								<div class="col-md-offset-4 col-md-4" id="rw3">
-									<div class="form-group">
-										<label></label><br>
+										<!-- begin col-4 -->
+										<div class="col-md-offset-4 col-md-4" id="rw3">
+											<div class="form-group">
+												<label></label><br>
 
-										<div class="row">
+												<div class="row">
 
-											<input type="submit" onclick="save_order()" id="btnsave" name="middle"
-											       class=" btn btn-block btn-success" value="Save">
+													<div  onclick="save_order()" id="btnsave" name="middle" class=" btn btn-block btn-success" >Save1</div>
+													<div id = "sv_results"></div>
 
 
+
+
+												</div>
+											</div>
 										</div>
-									</div>
-								</div>
-								<!-- end col-4 -->
-							<?php
-							}
-							if(isset($saved_state))
-							{
-							?>
-							<!-- begin col-4 -->
-							<div class="col-md-offset-4 col-md-4" id="rw3">
-								<div class="form-group">
-									<label></label><br>
-									<div class="row">
-										<div id = "sv_results"><?php echo $msg ?></div>
+										<!-- end col-4 -->
 
-									</div>
 								</div>
-							</div>
-							<!-- end col-4 -->
-							<?php
-							}
-							?>
-						</div>
 							</form>
+							<div id="populate"></div>
+
+
 
 
 						</div>
+
 						<?php
 
 						if(isset($saved_state) && $saved_state === 1)
@@ -154,6 +133,7 @@
 						?>
 
 						<div class="well bg-white">
+							<div id="populate"></div>
 							<a  href="#modal-dialog" data-toggle="modal"><div  name="middle" class=" btn btn-block btn-success" >Add Product</div></a><br>
 							<table class="table table-bordered">
 								<thead>
@@ -217,6 +197,7 @@
 					</div>
 				</div>
 				<!-- end panel -->
+
 			</div>
 			<!-- end col-12 -->
 		</div>
@@ -253,7 +234,7 @@
 										for($i=0;$i<$count;$i++)
 										{
 											?>
-											<option value="<?php echo $products[$i]['Code'] ?>"><?php echo $products[$i]['Description']. "   (".$products[$i]['PackSize']."ml)" ?></option>
+											<option value="<?php echo $products[$i]['Code'] ?>"><?php echo $products[$i]['Description']. "   (".$products[$i]['PackSize'].")" ?></option>
 										<?php
 										}
 										?>
@@ -394,7 +375,7 @@
 		function save_order() {
 			$('#btnsave').slideToggle();
 			$('#btnsave').append('hfhfhfhf');
-			$.post('order_save',{cname:fo.name.value},
+			$.post('save',{cu:order_form.cname.value,oi:order_form.oi.value,rep:order_form.rep.value},
 				function(output){
 					$('#sv_results').html(output).fadeOut(1).fadeIn(1000);
 				});$('#rw2').slideToggle(1000);
@@ -429,9 +410,9 @@
 
 		function add_details() {
 
-			$.post('o_add',{qty:details.qty.value,oi:details.onum.value,prod:details.prod.value},
+			$.post('jquery_add',{qty:details.qty.value,oi:details.onum.value,prod:details.prod.value},
 				function(output){
-					$('#details_results').html(output,get_qty());
+					$('#details_results').html(output,get_qty(),populate());
 				});
 			$('#details_results').fadeOut().fadeIn();
 
@@ -443,6 +424,14 @@
 				function(output){
 					$('#details_qty').html(output);
 				});
+		}
+
+		function populate()
+		{
+			$.post('jquery_populate',{oi:details.onum.value},function(output){
+				$('#populate').html(output);
+			});
+
 		}
 	</script>
 </body>
