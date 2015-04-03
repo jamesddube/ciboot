@@ -57,7 +57,8 @@ class Model_users extends CI_Model
 			'fname' => $this->input->post('rFname'),
 			'surname' => $this->input->post('rLname'),
 			'password' => $hashed_pass[0],
-			'role' => $this->input->post('rRole')
+			'role' => $this->input->post('rRole'),
+            'picture' => 'default_avatar_male.jpg' //default picture, user can change picture later
 		);
 		
 		//$query = $this->db->insert('usersj' , $data);

@@ -65,7 +65,7 @@
 												for($i=0;$i<$count;$i++)
 												{
 												?>
-												<option value="<?php echo $cust[$i]['CustomerID'] ?>"><?php echo $cust[$i]['CustomerName'] ?></option>
+												<option value="<?php echo $cust[$i]['CustomerID'] ?>"><?php echo strtoupper($cust[$i]['CustomerName']) ?></option>
 												<?php
 												}
 												?>

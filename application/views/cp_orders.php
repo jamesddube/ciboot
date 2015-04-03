@@ -8,12 +8,9 @@ require ('template/sidebar.php');
 ?>
 
 
-<!-- ================== BEGIN PAGE LEVEL JS ================== --
-<script type="text/javascript" src="<?php echo base_url("assets/plugins/gritter/js/jquery.gritter.js")?>"></script>
+<!-- ================== BEGIN PAGE LEVEL JS ================== -->
 <script type="text/javascript" src="<?php echo base_url('assets/js/ui-modal-notification.demo.min.js')?>" ></script>
-<script type="text/javascript" src="<?php echo base_url('assets/js/apps.min.js')?>"></script>
 <!-- ================== END PAGE LEVEL JS ================== -->
-<script src="<?php echo base_url('assets/js/apps.min.js') ?>"></script>
 
 
 <!-- begin #content -->
@@ -60,7 +57,7 @@ require ('template/sidebar.php');
                             <table class="table table-condensed  table-hover">
                                 <thead>
                                     <tr>
-                                        <th>Date</th>
+                                        <th>Datej</th>
                                         <th>#Order ID</th>
                                         <th>Customer</th>
                                         <th>Route</th>
@@ -89,7 +86,7 @@ require ('template/sidebar.php');
                                         <td class="23">
 
                                             <form name="fm"><input type="hidden" id="oid" value="<?php echo $orders[$i]['order_id'] ?>" ></form>
-                                            <a  value="8" href="<?php echo base_url('main/orders_view/'.$orders[$i]['order_id'])?>"
+                                            <a  value="8" href="<?php echo base_url('orders/view/'.$orders[$i]['order_id'])?>"
                                                 ><?php
                                             //print_r($orders);
 
@@ -183,7 +180,7 @@ require ('template/sidebar.php');
                 </div>
                 <div class="modal-footer">
                     <a href="javascript:;" class="btn btn-sm btn-white" data-dismiss="modal">Close</a>
-                    <a href="javascript:;" id="pr" class="btn btn-sm btn-danger" onclick="get_qty()">Process</a>
+                    <a href="javascript:;" id="pr" class="btn btn-sm btn-danger" onclick = submit() >Process</a>
                 </div>
             </div>
         </div>
@@ -194,24 +191,72 @@ require ('template/sidebar.php');
 			
 		<?php
 }
-		
+
 		?>
 
 
+
+<!-- ================== BEGIN BASE JS ================== -->
+<script type="text/javascript" src=<?php echo base_url("assets/js/jquery.js")?>></script>
+<script type="text/javascript" src=<?php echo base_url("assets/js/jquery-1.8.2.min.js")?>></script>
+<script src=<?php echo base_url("assets/plugins/jquery-ui-1.10.4/ui/minified/jquery-ui.min.js") ?>></script>
+<script src=<?php echo base_url("assets/plugins/bootstrap-3.2.0/js/bootstrap.min.js") ?>></script>
+<!--[if lt IE 9]>
+<script src=<?php echo base_url("assets/crossbrowserjs/html5shiv.js") ?>></script>
+<script src=<?php echo base_url("assets/crossbrowserjs/respond.min.js") ?>></script>
+<script src=<?php echo base_url("assets/crossbrowserjs/excanvas.min.js") ?>></script>
+<![endif]-->
+<script src=<?php echo base_url("assets/plugins/slimscroll/jquery.slimscroll.min.js") ?>></script>
+<script src=<?php echo base_url("assets/plugins/jquery-cookie/jquery.cookie.js") ?>></script>
+<!-- ================== END BASE JS ================== -->
+
+<!-- ================== BEGIN PAGE LEVEL JS ================== -->
+<script src=<?php echo base_url("assets/plugins/parsley/dist/parsley.js") ?>></script>
+<script src=<?php echo base_url("assets/plugins/bootstrap-wizard/js/bwizard.js") ?>></script>
+<script src=<?php echo base_url("assets/js/form-wizards.demo.min.js") ?>></script>
+<script src=<?php echo base_url("assets/js/apps.min.js") ?>></script>
+<!-- ================== END PAGE LEVEL JS ================== -->
+
+<script>
+    $(document).ready(function() {
+        App.init();
+        FormWizard.init();
+    });
+    </script>
 <script type="text/javascript">
-        function get_qty()
-        {
-            var j = $("g").val();
-            $.post('order_process/'+j,{o:0},
+    function get_qty()
+    {
+        var order = $("g").val();
+        $.post('order_process/'+order,{o:0},
             function(output){
-            $('#proc').html(output);
+                $('#proc').html(output);
             });
-            $('#proc').fadeOut().fadeIn();
-            $("#pr").slideToggle();
-        }
+        $('#proc').fadeOut().fadeIn();
+        $("#pr").slideToggle();
+    }
+    function check2()
+    {
+        var order = $("g").val();
+        $.post('ciboot/order_process/'+order,{o:0},
+            function(output){
+                $('#proc').html(output);
+            });
+        $('#proc').fadeOut().fadeIn();
+        $("#pr").slideToggle();
+    }
+
+    function submit()
+    {
+
+        $.post('ciboot/submit',{o:0},
+            function(output){
+                $('#proc').html(output);
+            });
+
+    }
 
     $(document).ready(function(){
-        $(".btnproc").click(function(){
+        $(".btntproc").click(function(){
 
             $("g").empty();
             $('#proc').empty();
@@ -227,7 +272,4 @@ require ('template/sidebar.php');
         });
     });
 </script>
-<?php 
-require ('template/footer.php');
-?>
 		

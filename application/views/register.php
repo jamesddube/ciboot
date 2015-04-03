@@ -25,7 +25,7 @@ $ps = md5('q');
             	
             	
             	
-                <form action="<?php echo base_url('main/register')?>" method="post" class="margin-bottom-0">
+                <form action="<?php echo base_url('auth/register')?>" method="post" class="margin-bottom-0">
                 	
                 	<?php
                 	

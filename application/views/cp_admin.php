@@ -4,10 +4,10 @@
 //echo date('y-01-01');
 //echo $effectiveDate = date('y-01-01');
 //echo $effectiveDate2 = date('Y-m-d', strtotime("-1 months", strtotime($effectiveDate)));
-echo $litre =$OA1000[0];
-echo $ks =$OA300[0];
-//echo $litre2 =$analytics[0];
-echo $title = "Dashboard";
+$litre =$OA1000[0];
+$ks =$OA300[0];
+//$litre2 =$analytics[0]
+$title = "Dashboard";
 require ('template/header.php');
 require ('template/sidebar.php');
 $p1 = $p300;
@@ -344,5 +344,7 @@ require ('template/footer.php');
     {
         litre[i] = analytics1000[i];
     }
+
+    DashboardV2.init();
 
 </script>

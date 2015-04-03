@@ -37,7 +37,10 @@ class Model_orders extends CI_Model
 	}
 
 
-
+	/**
+	 * @param $status
+	 * @return string
+     */
 	function get_orders($status)
 	{
 		if($status == null or "")
@@ -105,7 +108,8 @@ class Model_orders extends CI_Model
 		$data = array(
 			'order_id' => $oi,
 			'customer_id' => $cu,
-			'salesrep' => $rep
+			'salesrep' => $rep,
+
 		);
 
 

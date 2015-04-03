@@ -7,8 +7,9 @@ class Main extends CI_Controller {
 
 	public function Main()
 	{
-		echo "main construct called";
+
 		parent::__construct();
+
 		$this->ciboot_security->admin_security();
 
 	}
@@ -39,109 +40,6 @@ public function test()
 
 	$this->load->view('test',$data);
 }
-//==================================================================================================================================
-
-	public function order_process($order)
-	{
-		//$orders = $this->input->post('oi');
-		//get order details
-		//$data['details'] = $this->model_orders->get_order_details('OD0023');
-		if($details = $this->model_orders->get_order_details($order))
-		{
-			if($details> 0) {
-
-				//$id = $details[0]['product_id'];
-				$data = array ();
-				//loop each quantity
-				for ($i = 0; $i < count ($details); $i++) {
-					$id = $details[$i]['product_id'];
-
-					//add quantity for each row to its particular product
-					array_key_exists ($id, $data) ? $data[$id] += $details[$i]['quantity'] : $data[$id] = $details[$i]['quantity'];
-
-				}
-				//initialise the array
-				$prod = array ();
-
-				//now lets check each product if there is sufficient quantity
-				foreach ($data as $key => $value) {
-					$stock_qty = $this->model_products->get_stocks_by_id ($key);
-
-					if ($stock_qty > $value) {
-						$msg[$key] =  $key . '  available<br>';
-						$prod[$key] = 'available';
-					} else {
-						$msg[$key] = $key . ' unavailable required: ' . $value . ' available: ' . $stock_qty . '<br>';
-						$prod[$key] = 'unavailable';
-					}
-
-				}
-
-				//was there any product with insufficient stock? if yes we cannot proceed
-				if (in_array ('unavailable', $prod))
-				{
-					echo "<div class='alert-danger alert m-b-0'>";
-					echo "<h4><i class='fa fa-warning'></i> Error Processing Order</h4>";
-					echo 'we cannot process order: ' . $order.'<br>';
-
-					//loop through the messages
-					foreach($msg as $row)
-					{
-						echo $row;
-					}
-					echo "</div>";
-
-				} else
-				{
-					//we can process
-
-					foreach ($data as $key => $value) {
-						$process = $this->model_products->update_stock ($key, '-', $value);
-						if ($process) {
-							$stock[$key] = 'processed';
-						} else {
-							$stock[$key] = 'unprocessed';
-						}
-					}
-					if(in_array('unprcessed',$stock))
-					{
-						echo "there was an error updating stock for the order";
-					}
-					else
-					{
-						$op = $this->model_orders->update_order('process',$order);
-						if($this->model_orders->update_order('process',$order))
-						{
-							//order processed
-							echo "<div class='alert-success alert m-b-0'>";
-							echo 'Order: ' . $order.' was sucessfully processed <br></div>';
-						}
-						else
-						{
-							echo "<div class='alert-danger alert m-b-0'>";
-							echo "<h4><i class='fa fa-warning'></i>Error</h4>";
-							echo 'Order: ' . $order.' was not processed <br>';
-							echo 'Details: ' . $op.' <br></div>';
-
-
-						}
-					}
-
-
-				}
-			}
-			else
-			{
-				echo 'no products have been added to the order';
-			}
-
-		}
-		else
-		{
-			echo 'we could not find the order:'.$order;
-		}
-	}
-
 
 
 //================================================================================================================================
@@ -239,70 +137,6 @@ public function test()
 
 
 
-//==================================================                 =============================================================
-//==================================================     ORDERS      =============================================================
-//==================================================                 =============================================================
-
-
-
-
-	public function orders()
-	{
-		if($this->session->userdata('is_logged_in'))
-		{
-
-			//get order info
-			//$this->load->model('model_products');
-			$orders = $this->model_products->get_orders();
-			//pass on user info to admin page
-				$data = array(
-				'username' => $this->session->userdata('username'),
-					'orders' => $orders
-				);
-			$this->load->view('cp_orders', $data);
-		}
-		else 
-			{
-				redirect('main/restricted');
-			}
-	}
-//=================================================================================================================================
-
-
-
-
-
-
-	/**
-	 * @param $key
-	 */
-	public function orders_view($key)
-	{   //check if user is logged in
-		if($this->session->userdata('is_logged_in'))
-		{
-			//get order info
-
-			$orders = $this->model_orders->get_order_details($key);
-
-
-
-			//pass on user info to admin page
-				$data = [
-				'username' => $this->session->userdata('username'),
-					'orders' => $orders,
-					'key' => $key
-
-				];
-			$this->load->view('cp_orders_view', $data);
-		}
-		else
-			{
-				redirect('main/restricted');
-			}
-	}
-
-
-
 //====================================================================================================================================
 
 	/**
@@ -378,18 +212,14 @@ public function test()
 
 	public function map()
 	{
-		if($this->session->userdata('is_logged_in'))
-		{
+
 			//pass on user info to admin page
 				$data = array(
 				'username' => $this->session->userdata('username')
 				);
 			$this->load->view('cp_map', $data);
-		}
-		else 
-			{
-				redirect('main/restricted');
-			}
+
+
 	}
 //==================================================End of Function===============================================================
 

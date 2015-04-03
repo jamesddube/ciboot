@@ -10,7 +10,7 @@ class Users extends CI_Controller {
 
 	public function index()
 	{
-		if($this->session->userdata('is_logged_in'))
+		if($this->session->userdata('role')==='admin')
 		{
 
 			//get users from database
@@ -23,7 +23,7 @@ class Users extends CI_Controller {
 		}
 		else
 		{
-			redirect('main/restricted');
+			redirect('restricted');
 		}
 	}
 

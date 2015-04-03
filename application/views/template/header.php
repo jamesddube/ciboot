@@ -142,7 +142,7 @@ $ci =& get_instance();
                         <li><a href="javascript:;">Calendar</a></li>
                         <li><a href="javascript:;">Setting</a></li>
                         <li class="divider"></li>
-                        <li><a href=<?php echo base_url("auth/logout")?>>Log Out</a></li>
+                        <li><a href="<?php echo base_url("auth/logout") ?>">Logout</a></li>
                     </ul>
                 </li>
             </ul>

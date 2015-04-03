@@ -138,7 +138,7 @@ class Auth extends CI_Controller {
 		$this->form_validation->set_rules('rEmail','Email','required|xss_clean|trim|valid_email|is_unique[users.email]');
 		$this->form_validation->set_rules('rPassword','Password','required|trim');
 		$this->form_validation->set_rules('rFname','First Name','required|trim');
-		$this->form_validation->set_rules('rLname','Surname','required|trim|alpha');
+		$this->form_validation->set_rules('rLname','Surname','required|trim');
 		$this->form_validation->set_rules('cPassword','Confirm Password','required|matches[rPassword]');
 
 		if($this->form_validation->run())
