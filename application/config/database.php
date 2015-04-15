@@ -64,7 +64,7 @@ $db['default']['swap_pre'] = '';
 $db['default']['autoinit'] = TRUE;
 $db['default']['stricton'] = FALSE;
 
-$db['aximos']['hostname'] = "Driver=FreeTDS;Server=10.42.0.92\SQLEXPRESS;database=AXIMOSMBC;MARS_Connection=Yes";
+$db['aximos']['hostname'] = "Driver=FreeTDS;Server=10.42.0.71\SQLEXPRESS;database=AXIMOSMBC;MARS_Connection=Yes";
 $db['aximos']['username'] = 'sa';
 $db['aximos']['password'] = 'sead2301';
 $db['aximos']['database'] = 'AXIMOSMBC';

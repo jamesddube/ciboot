@@ -26,5 +26,13 @@ class Users extends CI_Controller {
 			redirect('restricted');
 		}
 	}
+    public function addUser()
+    {
+        $this->load->view('cp_users_add');
+    }
+    public function jqueryAdd()
+    {
+        echo "received". $this->input->post('rFname');
+    }
 
 }

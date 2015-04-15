@@ -59,6 +59,7 @@ class Api extends CI_Controller
             if(json_decode($_POST["orders"]))
             {
                 //check if the order has not been saved before
+
                 $this->Sync_Orders($_POST["orders"]);
             }
             else
@@ -90,13 +91,16 @@ class Api extends CI_Controller
             "response" => $response,
         );
         $output1[]=$array;
-
-        print(json_encode($output1));
+$result = json_encode($output1);
+	echo "<pre>";
+        echo($result);
+	echo "</pre>";
     }
 
     private function GenerateSyncResponseSuccess($response,$response_orders)
     {
         $array1[0]["response"] = $response;
+        $array1[0]["order_sync_count"] = count($response_orders->order_id);
         for($i = 0;$i < count($response_orders->order_id); $i++)
         {
             $array1[$i]["orders"] = $response_orders->order_id[$i];
@@ -189,25 +193,33 @@ class Api extends CI_Controller
 
         if(count($order->order_id) < 2)
         {
-            $this->model_orders->order_save($order->order_id,$order->customer_id,$order->salesrep) ? $order_result[0] = "success" : $order_result[0] = "error";
-
-            //check if there are any failed transactions
-            if(in_array("error",$order_result))
+            //check if the order has not been saved already
+            if($this->model_orders->order_exists($order->order_id))
             {
-                $this->GenerateSyncResponse("There was an error saving the order " );
+                $order_result = "error";
+                $order_result_detail = "Order ".$order->order_id. " already saved";
             }
-            else
-            {
-                //The Order was saved, now lets save the order details
-                if(json_decode($this->input->post('order_details')))
-                {
-                    $this->Sync_OrderDetails($this->input->post('order_details'));
-                }
-                else
-                {
-                    $this->GenerateSyncResponse("No order details have been sent");
-                }
-            }//
+             else {
+                 $this->model_orders->order_save($order->order_id, $order->customer_id, $order->salesrep) ? $order_result[0] = "success" : $order_result[0] = "error";
+             }
+                //check if there are any failed transactions
+                    if(in_array("error",$order_result))
+                    {
+                        $this->GenerateSyncResponse("There was an error saving the order : ".$order_result_detail );
+                    }
+                    else
+                    {
+                        //The Order was saved, now lets save the order details
+                        if(json_decode($this->input->post('order_details')))
+                        {
+                            $this->Sync_OrderDetails($this->input->post('order_details'));
+                        }
+                        else
+                        {
+                            $this->GenerateSyncResponse("No order details have been sent");
+                        }
+                    }
+
 
         }
         else//more than one order
@@ -218,7 +230,7 @@ class Api extends CI_Controller
                 if($this->model_orders->order_exists($order->order_id[$i]))
                 {
                     $order_result[$i] = "error";
-                    $order_result_detail[$i] = "Order : ".$order->order_id[$i]. " already saved";
+                    $order_result_detail[$i] = "Order ".$order->order_id[$i]. " already saved";
                 }
                 else
                 {
@@ -230,7 +242,24 @@ class Api extends CI_Controller
             //check if there are any failed transactions
             if(in_array("error",$order_result))
             {
-                $this->GenerateSyncResponse("There was an error saving the order : ".$order_result_detail[0] );
+
+                //check for successful orders
+                if(in_array("success",$order_result))
+                {
+                    //Generate string of failed orders
+                    $failedOrder_list = "";
+                    for($i = 0; $i < count($order->order_id);$i++)
+                    {
+                       $failedOrder_list = $failedOrder_list . ", ".$order->order_id[$i];
+                    }
+
+                    $this->GenerateSyncResponse("Some of the Orders were saved, the following Orders are already synced : ".$failedOrder_list );
+                }
+                else
+                {
+                    $this->GenerateSyncResponse("There was an error saving the order ".$order_result_detail[0] );
+                }
+
             }
             else
             {

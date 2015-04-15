@@ -16,18 +16,7 @@
 	<?php require('template/sidebar.php') ?>
 	<!-- end #sidebar -->
 
-	<!-- begin #content -->
-	<div id="content" class="content">
-		<!-- begin breadcrumb -->
-		<ol class="breadcrumb pull-right">
-			<li><a href="javascript:;">Home</a></li>
-			<li><a href="javascript:;">Form Stuff</a></li>
-			<li class="active">Wizards + Validation</li>
-		</ol>
-		<!-- end breadcrumb -->
-		<!-- begin page-header -->
-		<h1 class="page-header">Add New Order <small>header small text goes here...</small></h1>
-		<!-- end page-header -->
+
 
 		<!-- begin row -->
 		<div class="row">

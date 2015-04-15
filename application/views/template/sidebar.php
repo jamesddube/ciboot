@@ -75,7 +75,8 @@
                 <span>Users</span>
             </a>
             <ul class="sub-menu">
-                <li><a href="<?php echo base_url('users') ?>">View Users</a></li>
+                <li><a href="<?php echo base_url('users/addUser') ?>"><span>Add User <i class="fa fa-user text-theme m-l-5"></i></span></a></li>
+                <li><a href="<?php echo base_url('users') ?>"><span>View Users <i class="fa fa-users text-theme m-l-5"></i></span></a></li>
                 <li><a href="chart-morris.html">Morris Chart</a></li>
             </ul>
         </li>
@@ -100,7 +101,8 @@
                 <span>Stocks</span>
             </a>
             <ul class="sub-menu">
-                <li><a href="gallery.html">Gallery v1</a></li>
+                <li><a href="<?php echo base_url('product/addStock') ?>"> <span>Add Stocks <i class="fa fa-cubes text-theme m-l-5"></i></span></a></li>
+
                 <li><a href="gallery_v2.html">Gallery v2</a></li>
             </ul>
         </li>
@@ -147,3 +149,17 @@
         </div>
         <div class="sidebar-bg"></div>
         <!-- end #sidebar -->
+
+        <!-- begin #content -->
+        <div id="content" class="content">
+            <!-- begin breadcrumb -->
+            <ol class="breadcrumb pull-right">
+                <li><a href="<?php echo base_url() ?> ">Home</a></li>
+                <li><a href="<?php echo base_url($this->uri->segment(1)) ?>"><?php echo $title ?></a></li>
+                <li class="active"><?php echo $this->uri->segment(2,"here") ?></li>
+            </ol>
+            <!-- end breadcrumb -->
+            <!-- begin page-header -->
+            <?php // @todo edit small text ?>
+            <h1 class="page-header"><?php echo $title ?> <small>small text</small></h1>
+            <!-- end page-header -->

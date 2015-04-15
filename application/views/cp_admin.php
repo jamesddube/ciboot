@@ -14,7 +14,7 @@ $p1 = $p300;
 $p2 = $p500;
 $p3 = $p1000;
 $p4 = $p2000;
-echo $ra = rand(40,100);
+//echo $ra = rand(40,100);
 ?>
 
 
@@ -35,18 +35,6 @@ echo $ra = rand(40,100);
 <!-- ================== END PAGE LEVEL JS ================== -->
 
 
-<!-- begin #content -->
-<div id="content" class="content">
-<!-- begin breadcrumb -->
-<ol class="breadcrumb pull-right">
-    <li><a href="javascript:;">Home</a></li>
-    <li><a href="javascript:;">Dashboard</a></li>
-    <li class="active">Dashboard v2</li>
-</ol>
-<!-- end breadcrumb -->
-<!-- begin page-header -->
-<h1 class="page-header">Dashboard v2 <small>header small text goes here...</small></h1>
-<!-- end page-header -->
 <!-- begin row -->
 <div class="row">
     <!-- begin col-3 -->
